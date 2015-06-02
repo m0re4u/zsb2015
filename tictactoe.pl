@@ -9,7 +9,7 @@ include('alphabeta.pl').
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
-	bagof(X,move(Pos,X), PosList).
+	bagof(X,countermove(Pos,X), PosList).
 
 % Value of a terminal node
 staticval(Pos, Val):-
