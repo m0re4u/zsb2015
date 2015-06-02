@@ -4,8 +4,8 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- [minimax].
-include('alphabeta.pl').
+% :- [minimax].
+:- [alphabeta].
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
@@ -49,7 +49,9 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 	;
 	G == H,
 	G == I,
-	returnstaticval(G,Val).
+	returnstaticval(G,Val)
+	;
+	Val = 0.
 
 returnstaticval(A,Val):-
 	A == 1,
