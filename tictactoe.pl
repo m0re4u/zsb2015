@@ -4,13 +4,8 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-<<<<<<< HEAD
 :- [minimax].
 include('alphabeta.pl').
-=======
-consult('minimax.pl').
-consult('alphabeta.pl').
->>>>>>> origin/master
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
