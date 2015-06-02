@@ -4,8 +4,8 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- [minimax].
-%:- [alphabeta].
+%:- [minimax].
+:- [alphabeta].
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
@@ -133,7 +133,7 @@ gameloop(Pos,_):-
 gameloop(Pos,_):-
 	staticval(Pos,X),
 	X == 1,
-	writeln('You were convincinly beaten!').
+	writeln('You were convincingly beaten!').
 gameloop(Pos,_):-
 	\+ member(1,Pos),
 	\+ member(2,Pos),

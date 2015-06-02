@@ -6,6 +6,10 @@ Current assignment:
 
 1. Tic-tac-toe Prolog
  ---
+ 
+ 
+ 
+ 
 To Do 
 
 - Michiel
