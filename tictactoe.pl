@@ -47,10 +47,10 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 
 returnstaticval(A,Val):-
 	A == 1,
-	Val = 1.
+	Val = -1.
 returnstaticval(A,Val):-
 	A == 2,
-	Val = -1.	
+	Val = 1.	
 
 % count/2 for counting 0's
 count([],_,0).
