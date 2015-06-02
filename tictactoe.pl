@@ -4,12 +4,18 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-include('minimax.pl').
+:- [minimax].
 include('alphabeta.pl').
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
+	min_to_move(Pos),
+	bagof(X,move(Pos,X), PosList)
+	;
+	max_to_move(Pos),
 	bagof(X,countermove(Pos,X), PosList).
+	
+	
 
 % Value of a terminal node
 staticval([A,B,C,D,E,F,G,H,I], Val):-
