@@ -119,3 +119,12 @@ move(Pos,X):-
 	
 countermove(Pos,X):-
 	select(0,Pos,2,X).
+
+
+visualisation([A,B,C,D,E,F,G,H,I]):-
+	findall.
+
+
+
+
+
