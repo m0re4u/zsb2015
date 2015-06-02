@@ -53,17 +53,17 @@ returnstaticval(A,Val):-
 	Val = -1.	
 
 % count/2 for counting 0's
-count([],X,0).
+count([],_,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).	
 % Opponents turn
 min_to_move(Pos):-
 	count(Pos,0,Y),
-	\+ 0 =:= mod 2.
+	\+ 0 =:= Y mod 2,!.
 % Your turn
 max_to_move(Pos):-
 	count(Pos,0,Y),
-	0 =:= mod 2.
+	0 =:= Y mod 2,!.
 
 move(Pos,X):-
 	select(0,Pos,1,X).
