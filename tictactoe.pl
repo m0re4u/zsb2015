@@ -4,8 +4,13 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+<<<<<<< HEAD
 :- [minimax].
 include('alphabeta.pl').
+=======
+consult('minimax.pl').
+consult('alphabeta.pl').
+>>>>>>> origin/master
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
@@ -62,6 +67,7 @@ returnstaticval(A,Val):-
 count([],_,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).	
+
 % Opponents turn
 min_to_move(Pos):-
 	count(Pos,0,Y),
