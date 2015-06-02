@@ -14,28 +14,16 @@ moves(Pos,PosList):-
 	;
 	max_to_move(Pos),
 	bagof(X,countermove(Pos,X), PosList).
+
+move(Pos,X):-
+	select(0,Pos,1,X).
 	
-tictactoe(Pos,X,Y):-
-	minimax(Pos,X,Y),
-	winner(Pos).
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == -1,
-	print('the human wins!').
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == 1,
-	print('the computer wins!').
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == 0,
-	print('next move please').
-
+countermove(Pos,X):-
+	select(0,Pos,2,X).
+	
 % Value of a terminal node
 % full hardcode
+/*
 staticval([1,1,1,_,_,_,_,_,_],-1).
 staticval([_,_,_,1,1,1,_,_,_],-1).
 staticval([_,_,_,_,_,_,1,1,1],-1).
@@ -53,10 +41,10 @@ staticval([_,2,_,_,2,_,_,2,_],1).
 staticval([_,_,2,_,_,2,_,_,2],1).
 staticval([2,_,_,_,2,_,_,_,2],1).
 staticval([_,_,2,_,2,_,2,_,_],1).
+
 staticval([_,_,_,_,_,_,_,_,_],0).
+*/
 
-
-/*
 staticval([A,B,C,D,E,F,G,H,I], Val):-
 	A == D,
 	A == G,
@@ -90,8 +78,7 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 	G == I,
 	returnstaticval(G,Val).
 
-staticval([_],0).
-*/
+staticval([_,_,_,_,_,_,_,_,_],0).
 
 returnstaticval(A,Val):-
 	A == 1,
@@ -113,9 +100,3 @@ min_to_move(Pos):-
 max_to_move(Pos):-
 	count(Pos,0,Y),
 	0 =:= Y mod 2,!.
-
-move(Pos,X):-
-	select(0,Pos,1,X).
-	
-countermove(Pos,X):-
-	select(0,Pos,2,X).
