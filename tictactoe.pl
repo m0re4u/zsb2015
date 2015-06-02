@@ -14,28 +14,16 @@ moves(Pos,PosList):-
 	;
 	max_to_move(Pos),
 	bagof(X,countermove(Pos,X), PosList).
+
+move(Pos,X):-
+	select(0,Pos,1,X).
 	
-tictactoe(Pos,X,Y):-
-	minimax(Pos,X,Y),
-	winner(Pos).
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == -1,
-	print('the human wins!').
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == 1,
-	print('the computer wins!').
-
-winner(Pos):-
-	staticval(Pos,Y),
-	Y == 0,
-	print('next move please').
-
+countermove(Pos,X):-
+	select(0,Pos,2,X).
+	
 % Value of a terminal node
 % full hardcode
+/*
 staticval([1,1,1,_,_,_,_,_,_],-1).
 staticval([_,_,_,1,1,1,_,_,_],-1).
 staticval([_,_,_,_,_,_,1,1,1],-1).
@@ -53,10 +41,10 @@ staticval([_,2,_,_,2,_,_,2,_],1).
 staticval([_,_,2,_,_,2,_,_,2],1).
 staticval([2,_,_,_,2,_,_,_,2],1).
 staticval([_,_,2,_,2,_,2,_,_],1).
+
 staticval([_,_,_,_,_,_,_,_,_],0).
+*/
 
-
-/*
 staticval([A,B,C,D,E,F,G,H,I], Val):-
 	A == D,
 	A == G,
@@ -90,8 +78,7 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 	G == I,
 	returnstaticval(G,Val).
 
-staticval([_],0).
-*/
+staticval([_,_,_,_,_,_,_,_,_],0).
 
 returnstaticval(A,Val):-
 	A == 1,
@@ -114,16 +101,59 @@ max_to_move(Pos):-
 	count(Pos,0,Y),
 	0 =:= Y mod 2,!.
 
-move(Pos,X):-
-	select(0,Pos,1,X).
-	
-countermove(Pos,X):-
-	select(0,Pos,2,X).
+visual(Pos):-
+	replace(0,-,Pos,Pos1),
+	replace(1,x,Pos1,Pos2),
+	replace(2,o,Pos2,Pos3),
+	Pos3 = [A,B,C,D,E,F,G,H,I],
+	writeln('  -----------'),
+	write(' | '), write(A), write(' | '), write(B), write(' | '), write(C), write('  | '),nl,writeln(' | -----------|'),
+	write(' | '), write(D), write(' | '), write(E), write(' | '), write(F), write('  | '),nl,writeln(' | -----------|'),
+	write(' | '), write(G), write(' | '), write(H), write(' | '), write(I), write('  | '),nl,writeln('  -----------').
+
+replace(_, _, [], []).
+replace(O, R, [O|T], [R|T2]) :- replace(O, R, T, T2).
+replace(O, R, [H|T], [H|T2]) :- H \= O, replace(O, R, T, T2).
+
+tictactoe:-
+	write('Enter a position for the first cross: '),
+	read(N),
+	X is N -1,
+	StartPos = [0,0,0,0,0,0,0,0,0],
+	replaceind(StartPos,X,1,NewPos),
+	minimax(NewPos,FinalPos,_),
+	visual(FinalPos),
+	writeln('Your opponent has moved'),
+	gameloop(FinalPos,[X]).
+
+gameloop(Pos,_):-
+	staticval(Pos,X),
+	X == -1,
+	writeln('You won!').
+gameloop(Pos,_):-
+	staticval(Pos,X),
+	X == 1,
+	writeln('You were beaten convincinly!').
+gameloop(Pos,_):-
+	\+ member(0,Pos),
+	writeln('You tied!').
+gameloop(Pos, Mademoves):-
+	write('Enter the next position: '),
+%	writeln(Mademoves),
+	read(N),
+	X is N -1,
+	\+ member(X,Mademoves),
+	NewMademoves = [X|Mademoves],
+	replaceind(Pos,X,1,NewPos),
+	minimax(NewPos,FinalPos,_),
+	visual(FinalPos),
+	member(0,Pos),
+	gameloop(FinalPos, NewMademoves).
 
 
-visualisation([A,B,C,D,E,F,G,H,I]):-
-	findall.
 
+replaceind([_|T], 0, X, [X|T]).
+replaceind([H|T], I, X, [H|R]):- I > 0, I1 is I-1, replaceind(T, I1, X, R).
 
 
 
