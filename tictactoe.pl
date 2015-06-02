@@ -133,13 +133,14 @@ gameloop(Pos,_):-
 gameloop(Pos,_):-
 	staticval(Pos,X),
 	X == 1,
-	writeln('You were beaten convincinly!').
+	writeln('You were convincinly beaten!').
 gameloop(Pos,_):-
-	\+ member(0,Pos),
+	\+ member(1,Pos),
+	\+ member(2,Pos),
 	writeln('You tied!').
 gameloop(Pos, Mademoves):-
+	member(0,Pos),
 	write('Enter the next position: '),
-%	writeln(Mademoves),
 	read(N),
 	X is N -1,
 	\+ member(X,Mademoves),
@@ -147,7 +148,6 @@ gameloop(Pos, Mademoves):-
 	replaceind(Pos,X,1,NewPos),
 	minimax(NewPos,FinalPos,_),
 	visual(FinalPos),
-	member(0,Pos),
 	gameloop(FinalPos, NewMademoves).
 
 
