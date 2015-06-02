@@ -7,7 +7,8 @@
 %:- [minimax].
 :- [alphabeta].
 
-% List of moves from Pos, returns list of possible moves, fails if no moves are possible
+% List of moves from Pos, returns list of possible moves, fails if no moves are 
+% possible
 moves(Pos,PosList):-
 	min_to_move(Pos),
 	bagof(X,move(Pos,X), PosList)
@@ -22,29 +23,6 @@ countermove(Pos,X):-
 	select(0,Pos,2,X).
 	
 % Value of a terminal node
-% full hardcode
-/*
-staticval([1,1,1,_,_,_,_,_,_],-1).
-staticval([_,_,_,1,1,1,_,_,_],-1).
-staticval([_,_,_,_,_,_,1,1,1],-1).
-staticval([1,_,_,1,_,_,1,_,_],-1).
-staticval([_,1,_,_,1,_,_,1,_],-1).
-staticval([_,_,1,_,_,1,_,_,1],-1).
-staticval([1,_,_,_,1,_,_,_,1],-1).
-staticval([_,_,1,_,1,_,1,_,_],-1).
-
-staticval([2,2,2,_,_,_,_,_,_],1).
-staticval([_,_,_,2,2,2,_,_,_],1).
-staticval([_,_,_,_,_,_,2,2,2],1).
-staticval([2,_,_,2,_,_,2,_,_],1).
-staticval([_,2,_,_,2,_,_,2,_],1).
-staticval([_,_,2,_,_,2,_,_,2],1).
-staticval([2,_,_,_,2,_,_,_,2],1).
-staticval([_,_,2,_,2,_,2,_,_],1).
-
-staticval([_,_,_,_,_,_,_,_,_],0).
-*/
-
 staticval([A,B,C,D,E,F,G,H,I], Val):-
 	A == D,
 	A == G,
@@ -101,6 +79,10 @@ max_to_move(Pos):-
 	count(Pos,0,Y),
 	0 =:= Y mod 2,!.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	Visualization of the game, not necessary for the algorithms to work
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 visual(Pos):-
 	replace(0,-,Pos,Pos1),
 	replace(1,x,Pos1,Pos2),
@@ -150,10 +132,74 @@ gameloop(Pos, Mademoves):-
 	visual(FinalPos),
 	gameloop(FinalPos, NewMademoves).
 
-
-
 replaceind([_|T], 0, X, [X|T]).
 replaceind([H|T], I, X, [H|R]):- I > 0, I1 is I-1, replaceind(T, I1, X, R).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	Minimax and AlphaBeta test routines for performance difference.
+	Done by using the same position and compairing calculation times
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/*
+--- minimax algorithm --- Test 1 ---
+?- time(minimax([0,0,0,0,0,0,0,0,0],X,Y)).
+% 75,404,856 inferences, 9.563 CPU in 9.626 seconds (99% CPU, 7885177 Lips)
+X = [0, 0, 0, 0, 0, 0, 0, 0, 1],
+Y = 0.
+
+--- AlphaBeta algorithm --- Test 1 ---
+?- time(alphabeta([0,0,0,0,0,0,0,0,0],0,0,X,Y)).
+% 13,876,469 inferences, 2.059 CPU in 2.123 seconds (97% CPU, 6738724 Lips)
+X = [0, 0, 0, 0, 0, 0, 0, 0, 1],
+Y = 0.
+
+--- minimax algorithm --- Test 2 ---
+?- time(minimax([0,0,0,0,0,0,0,0,1],X,Y)).
+% 8,363,422 inferences, 1.061 CPU in 1.057 seconds (100% CPU, 7884020 Lips)
+X = [0, 0, 0, 0, 0, 0, 2, 0, 1],
+Y = 0.
+
+--- AlphaBeta algorithm --- Test 2 ---
+?- time(alphabeta([0,0,0,0,0,0,0,0,1],0,0,X,Y)).
+% 2,466,467 inferences, 0.328 CPU in 0.350 seconds (94% CPU, 7528850 Lips)
+X = [0, 0, 0, 0, 0, 0, 2, 0, 1],
+Y = 0.
+
+--- minimax algorithm --- Test 3 ---
+?- time(minimax([0,0,0,1,0,0,2,0,1],X,Y)).
+% 148,968 inferences, 0.031 CPU in 0.030 seconds (104% CPU, 4774585 Lips)
+X = [0, 0, 0, 1, 0, 2, 2, 0, 1],
+Y = 0.
+
+--- AlphaBeta algorithm --- Test 3 ---
+?- time(alphabeta([0,0,0,1,0,0,2,0,1],0,0,X,Y)).
+% 96,476 inferences, 0.031 CPU in 0.028 seconds (111% CPU, 3092160 Lips)
+X = [0, 0, 0, 1, 0, 2, 2, 0, 1],
+Y = 0.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
