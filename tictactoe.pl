@@ -31,9 +31,19 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 	;
 	C == E,
 	C == G,
-	returnstaticval(C,Val).
-	
-	
+	returnstaticval(C,Val)
+	;
+	A == B,
+	A == C,
+	returnstaticval(A,Val)
+	;
+	D == E,
+	D == F,
+	returnstaticval(D,Val)
+	;
+	G == H,
+	G == I,
+	returnstaticval(G,Val).
 
 returnstaticval(A,Val):-
 	A == 1,
