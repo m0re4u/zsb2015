@@ -12,8 +12,35 @@ moves(Pos,PosList):-
 	bagof(X,countermove(Pos,X), PosList).
 
 % Value of a terminal node
-staticval(Pos, Val):-
+staticval([A,B,C,D,E,F,G,H,I], Val):-
+	A == D,
+	A == G,
+	returnstaticval(A,Val),
+	;
+	B == E,
+	B == H,
+	returnstaticval(B,Val),
+	;
+	C == F,
+	C == I,
+	returnstaticval(C,Val),
+	;
+	A == E,
+	A == I,
+	returnstaticval(A,Val),
+	;
+	C == E,
+	C == G,
+	returnstaticval(C,Val).
 	
+	
+
+returnstaticval(A,Val):-
+	A == 1,
+	Val = 1.
+returnstaticval(A,Val):-
+	A == 2,
+	Val = -1.	
 
 % Opponents turn
 %min_to_move(Pos):-
