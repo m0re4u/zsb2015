@@ -7,5 +7,14 @@
 include('minimax.pl').
 include('alphabeta.pl').
 
+% List of moves from Pos, returns list of possible moves, fails if no moves are possible
+moves(Pos,PosList):-
 
-[a,b,c,d,e,f,g,h,i]
+% Value of a terminal node
+staticval(Pos, Val):-
+
+% Opponents turn
+min_to_move(Pos):-
+
+% Your turn
+max_to_move(Pos):-
