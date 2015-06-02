@@ -15,19 +15,19 @@ moves(Pos,PosList):-
 staticval([A,B,C,D,E,F,G,H,I], Val):-
 	A == D,
 	A == G,
-	returnstaticval(A,Val),
+	returnstaticval(A,Val)
 	;
 	B == E,
 	B == H,
-	returnstaticval(B,Val),
+	returnstaticval(B,Val)
 	;
 	C == F,
 	C == I,
-	returnstaticval(C,Val),
+	returnstaticval(C,Val)
 	;
 	A == E,
 	A == I,
-	returnstaticval(A,Val),
+	returnstaticval(A,Val)
 	;
 	C == E,
 	C == G,
