@@ -4,8 +4,8 @@
 %%					Zoeken, Sturen en Bewegen					%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% :- [minimax].
-:- [alphabeta].
+:- [minimax].
+%:- [alphabeta].
 
 % List of moves from Pos, returns list of possible moves, fails if no moves are possible
 moves(Pos,PosList):-
@@ -15,7 +15,24 @@ moves(Pos,PosList):-
 	max_to_move(Pos),
 	bagof(X,countermove(Pos,X), PosList).
 	
-	
+tictactoe(Pos,X,Y):-
+	minimax(Pos,X,Y),
+	winner(Pos).
+
+winner(Pos):-
+	staticval(Pos,Y),
+	Y == -1,
+	print('the human wins!').
+
+winner(Pos):-
+	staticval(Pos,Y),
+	Y == 1,
+	print('the computer wins!').
+
+winner(Pos):-
+	staticval(Pos,Y),
+	Y == 0,
+	print('next move please').
 
 % Value of a terminal node
 % full hardcode
@@ -36,7 +53,7 @@ staticval([_,2,_,_,2,_,_,2,_],1).
 staticval([_,_,2,_,_,2,_,_,2],1).
 staticval([2,_,_,_,2,_,_,_,2],1).
 staticval([_,_,2,_,2,_,2,_,_],1).
-staticval([_],0).
+staticval([_,_,_,_,_,_,_,_,_],0).
 
 
 /*
