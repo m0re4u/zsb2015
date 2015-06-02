@@ -18,6 +18,28 @@ moves(Pos,PosList):-
 	
 
 % Value of a terminal node
+% full hardcode
+staticval([1,1,1,_,_,_,_,_,_],-1).
+staticval([_,_,_,1,1,1,_,_,_],-1).
+staticval([_,_,_,_,_,_,1,1,1],-1).
+staticval([1,_,_,1,_,_,1,_,_],-1).
+staticval([_,1,_,_,1,_,_,1,_],-1).
+staticval([_,_,1,_,_,1,_,_,1],-1).
+staticval([1,_,_,_,1,_,_,_,1],-1).
+staticval([_,_,1,_,1,_,1,_,_],-1).
+
+staticval([2,2,2,_,_,_,_,_,_],1).
+staticval([_,_,_,2,2,2,_,_,_],1).
+staticval([_,_,_,_,_,_,2,2,2],1).
+staticval([2,_,_,2,_,_,2,_,_],1).
+staticval([_,2,_,_,2,_,_,2,_],1).
+staticval([_,_,2,_,_,2,_,_,2],1).
+staticval([2,_,_,_,2,_,_,_,2],1).
+staticval([_,_,2,_,2,_,2,_,_],1).
+staticval([_],0).
+
+
+/*
 staticval([A,B,C,D,E,F,G,H,I], Val):-
 	A == D,
 	A == G,
@@ -49,9 +71,10 @@ staticval([A,B,C,D,E,F,G,H,I], Val):-
 	;
 	G == H,
 	G == I,
-	returnstaticval(G,Val)
-	;
-	Val = 0.
+	returnstaticval(G,Val).
+
+staticval([_],0).
+*/
 
 returnstaticval(A,Val):-
 	A == 1,
