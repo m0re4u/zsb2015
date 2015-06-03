@@ -80,7 +80,7 @@ max_to_move(Pos):-
 	0 =:= Y mod 2,!.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	Visualization of the game, not necessary for the algorithms to work
+%	Visualization of the game, not necessary for the algorithms to work
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 visual(Pos):-
@@ -103,7 +103,7 @@ tictactoe:-
 	X is N -1,
 	StartPos = [0,0,0,0,0,0,0,0,0],
 	replaceind(StartPos,X,1,NewPos),
-	minimax(NewPos,FinalPos,_),
+	alphabeta(NewPos,0,0,FinalPos,_),
 	visual(FinalPos),
 	writeln('Your opponent has moved'),
 	gameloop(FinalPos,[X]).
@@ -128,7 +128,7 @@ gameloop(Pos, Mademoves):-
 	\+ member(X,Mademoves),
 	NewMademoves = [X|Mademoves],
 	replaceind(Pos,X,1,NewPos),
-	minimax(NewPos,FinalPos,_),
+	alphabeta(NewPos,0,0,FinalPos,_),
 	visual(FinalPos),
 	gameloop(FinalPos, NewMademoves).
 
@@ -136,8 +136,8 @@ replaceind([_|T], 0, X, [X|T]).
 replaceind([H|T], I, X, [H|R]):- I > 0, I1 is I-1, replaceind(T, I1, X, R).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	Minimax and AlphaBeta test routines for performance difference.
-	Done by using the same position and compairing calculation times
+%	Minimax and AlphaBeta test routines for performance difference.
+%	Done by using the same position and compairing calculation times
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 /*
 --- minimax algorithm --- Test 1 ---
@@ -176,31 +176,4 @@ Y = 0.
 X = [0, 0, 0, 1, 0, 2, 2, 0, 1],
 Y = 0.
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
