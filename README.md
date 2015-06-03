@@ -8,9 +8,9 @@ Finished assignment:
 
 ---
 
-Next assignments:
+Current assignment:
 
-dunno 
+1. Chess! 
 
 
 - Michiel
