@@ -22,7 +22,6 @@ bk( _.._.._..BK.._, BK ).		% black king coordinates
 depth( _.._.._.._..Depth, Depth ).	% depth of position in search tree
 
 resetdepth( S..W..R..B.._D, S..W..R..B..0 ). 	% copy of position with depth 0
-resetdepth( S..W..Q..B.._D, S..W..Q..B..0 ). 	% copy of position with depth 0
 
 % basic operation
 max( A, B, A ) :-
