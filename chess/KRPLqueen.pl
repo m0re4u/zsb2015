@@ -74,4 +74,4 @@ queenlost(them..W..Q..B.._, _):-
 	ngb(B,Q),		% black king attacks queen
 	not ngb(W,Q).	% white king does not defend
 	
-queenwin(_.._.._.._.._, _).
+queenwin(_.._..B..B.._, _).
