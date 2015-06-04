@@ -29,8 +29,8 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - Q, them..W..QM..B..D1):-
 	
 move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	wk(Pos, W),	% white king pos
-	wq(Pos, Q),	% white queen pos
-	bk(Pos, B),	% black king pos
+	wq(Pos, Qx:Qy),	% white queen pos
+	bk(Pos, Bx:By),	% black king pos
 	% place white queen and black king on a line
 	(
 		Qx1 : Bx,
