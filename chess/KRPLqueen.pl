@@ -28,6 +28,7 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 	), 
 	QM \== Qx : Qy, 		% must move
 	Q = Qx:Qy,
+	ngb(Q, QM),
 	not inway(Q, W, QM),	% white king not in way
 	not inway(Q, B, QM).	% black king not in way
 	
@@ -46,22 +47,22 @@ move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 		coord(I),
 		M is I - 1,
 		Qx1 is Bx - M,
-		Qx2 is By - M
+		Qy1 is By - M
 	;
 		coord(I),
 		M is I - 1,
 		Qx1 is Bx + M,
-		Qx2 is By + M
+		Qy1 is By + M
 	;
 		coord(I),
 		M is I - 1,
 		Qx1 is Bx - M,
-		Qx2 is By + M
+		Qy1 is By + M
 	;
 		coord(I),
 		M is I - 1,
 		Qx1 is Bx + M,
-		Qx2 is By - M
+		Qy1 is By - M
 	),
 	% no white king in between queen and black king
 	not inway(Qx1 : Qy, W, Bx : By),
