@@ -19,7 +19,7 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 	%move horizontally or vertically or diagonally
 	(
 		QM = Qx : I
-	;
+	/*;
 		QM = I : Qy
 	;
 		% low left to high right
@@ -48,7 +48,7 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 		B is Qy - I,
 		A >= 1,
 		B >= 1,
-		QM = A : B
+		QM = A : B*/
 	), 
 	QM \== Qx : Qy, 		% must move
 	Q = Qx:Qy,
