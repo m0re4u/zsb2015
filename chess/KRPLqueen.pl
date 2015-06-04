@@ -93,8 +93,6 @@ move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	
 move(legal, us..P, M, P1):-
 	(
-		MC = kingdiagfirst
-	;
 		MC = queenmove
 	),
 	move(MC, us..P, M, P1).
