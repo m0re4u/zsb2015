@@ -38,9 +38,9 @@ move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	;
 		Qx1 : Qx,
 		Qy1 : By
-	)
+	),
 	% -- add diagonal -- 
-	% no white king in between rook and black king
+	% no white king in between queen and black king
 	not inway(Qx1 : Qy, W, Bx : By),
 	move(queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1).
 	
