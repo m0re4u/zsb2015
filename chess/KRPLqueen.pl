@@ -13,7 +13,7 @@ mode(queen).
 move(A,B,C,D):-
         moveGeneral(A,B,C,D).
 
-move(queenmove, us..W..Ox : Qy..B..D,Qx:Qy - Q, them..W..QM..B..D1):-
+move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - Q, them..W..QM..B..D1):-
 	D1 is D + 1,
 	coord(I),			% int between 1 - 8
 	%move horizontally or vertically
@@ -34,7 +34,7 @@ move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	% place white queen and black king on a line
 	(
 		Qx1 : Bx,
-		Qy1 : Qy,
+		Qy1 : Qy
 	;
 		Qx1 : Qx,
 		Qy1 : By
@@ -72,22 +72,4 @@ queenlost(_.._W..B..B.._, _). % queen has fallen
 
 queenlost(them..W..Q..B.._, _):-
 	ngb(B,Q),		% black king attacks queen
-	not ngb(W,Q)	% white king does not defend
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	not ngb(W,Q).	% white king does not defend
