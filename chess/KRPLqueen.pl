@@ -15,13 +15,15 @@ move(A,B,C,D):-
 
 move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 	D1 is D + 1,
-	%coord(I),			% int between 1 - 8
+	coord(I),			% int between 1 - 8
 	%move horizontally or vertically or diagonally
 	(
-		%QM = Qx : I
-		%;
-		%QM = I : Qy
-		%;
+		QM = Qx : I
+		;
+		QM = I : Qy
+		;
+		Qx < 7,
+		Qy < 7,
 		A is Qx + 1,
 		B is Qy + 1,
 		QM = A : B
