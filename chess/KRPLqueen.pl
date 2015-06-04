@@ -19,18 +19,39 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 	%move horizontally or vertically or diagonally
 	(
 		QM = Qx : I
-		;
+	;
 		QM = I : Qy
-		;
-		Qx < 7,
-		Qy < 7,
-		A is Qx + 1,
-		B is Qy + 1,
+	;
+		% low left to high right
+		A is Qx + I,
+		B is Qy + I,
+		A =< 8 ,
+		B =< 8,
+		QM = A : B
+	;
+		% high left to low right
+		A is Qx + I,
+		B is Qy - I,
+		A =< 8 ,
+		B =< 1,
+		QM = A : B
+	;
+		% low right to high left
+		A is Qx - I,
+		B is Qy + I,
+		A =< 1 ,
+		B =< 8,
+		QM = A : B
+	;
+		% high right to low left
+		A is Qx - I,
+		B is Qy - I,
+		A =< 1 ,
+		B =< 1,
 		QM = A : B
 	), 
 	QM \== Qx : Qy, 		% must move
 	Q = Qx:Qy,
-	ngb(Q, QM),
 	not inway(Q, W, QM),	% white king not in way
 	not inway(Q, B, QM).	% black king not in way
 	
