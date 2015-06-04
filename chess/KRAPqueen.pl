@@ -14,14 +14,14 @@ else_rule :: if true
 %		THEMMOVECONSTRAINT ).
 
 
-	
+/*	
 advice( move_random, 
-	queenwin :
+	not did_not_move_queen :
 	not queenlost :
 	queenmove :
         legal).
 
-/*
+*/
 advice( mate_in_2, 
 	mate :
 	not queenlost and their_king_edge :
@@ -57,5 +57,3 @@ themtomove and queendivides and not queenexposed:
 	not queenlost:
 	( depth < 5 ) and legal:
 	( depth < 4 ) and legal ).
-
-*/
