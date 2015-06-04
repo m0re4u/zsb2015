@@ -16,7 +16,7 @@ else_rule :: if true
 
 	
 advice( move_random, 
-	not queenexposed :
+	queenwin :
 	not queenlost :
 	queenmove :
         legal).
