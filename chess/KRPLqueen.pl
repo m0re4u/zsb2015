@@ -13,7 +13,7 @@ mode(queen).
 move(A,B,C,D):-
         moveGeneral(A,B,C,D).
 
-move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - Q, them..W..QM..B..D1):-
+move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 	D1 is D + 1,
 	coord(I),			% int between 1 - 8
 	%move horizontally or vertically
@@ -21,8 +21,12 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - Q, them..W..QM..B..D1):-
 		QM = Qx : I
 		;
 		QM = I : Qy
+		;
+		A is Qx + I,
+		B is Qy + I,
+		QM = A : B
 	), 
-	QM \== Qx : Qy, 	%must move
+	QM \== Qx : Qy, 		% must move
 	Q = Qx:Qy,
 	not inway(Q, W, QM),	% white king not in way
 	not inway(Q, B, QM).	% black king not in way
@@ -33,13 +37,32 @@ move(checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	bk(Pos, Bx:By),	% black king pos
 	% place white queen and black king on a line
 	(
-		Qx1 : Bx,
-		Qy1 : Qy
+		Qx1 = Bx,
+		Qy1 = Qy
 	;
-		Qx1 : Qx,
-		Qy1 : By
+		Qx1 = Qx,
+		Qy1 = By
+	;
+		coord(I),
+		M is I - 1,
+		Qx1 is Bx - M,
+		Qx2 is By - M
+	;
+		coord(I),
+		M is I - 1,
+		Qx1 is Bx + M,
+		Qx2 is By + M
+	;
+		coord(I),
+		M is I - 1,
+		Qx1 is Bx - M,
+		Qx2 is By + M
+	;
+		coord(I),
+		M is I - 1,
+		Qx1 is Bx + M,
+		Qx2 is By - M
 	),
-	% -- add diagonal -- 
 	% no white king in between queen and black king
 	not inway(Qx1 : Qy, W, Bx : By),
 	move(queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1).
@@ -66,10 +89,11 @@ queenexposed(Side..W..Q..B.._D, _):-
 queendivides(_Side..Wx : Wy..Qx : Qy..Bx : By.._D, _):-
 	ordered(Wx, Qx, Bx),!;
 	ordered(Wy, Qy, By).
-	% -- add diagonal --
 	
 queenlost(_.._W..B..B.._, _). % queen has fallen
 
 queenlost(them..W..Q..B.._, _):-
 	ngb(B,Q),		% black king attacks queen
 	not ngb(W,Q).	% white king does not defend
+	
+did_not_move_queen(_.._..Qx:Qy.._.._D,_.._..Qx:Qy.._.._D).
