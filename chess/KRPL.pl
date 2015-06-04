@@ -16,12 +16,10 @@
 side( Side.._, Side ).			% side to move in position
 wk( _..WK.._, WK ).			% white king coordinate
 wr( _.._..WR.._, WR ).			% white rook coordinates
-wq(_.._..Q.._, Q).				% white rook coordinates
 bk( _.._.._..BK.._, BK ).		% black king coordinates
 depth( _.._.._.._..Depth, Depth ).	% depth of position in search tree
 
 resetdepth( S..W..R..B.._D, S..W..R..B..0 ). 	% copy of position with depth 0
-resetdepth( S..W..Q..B.._D, S..W..Q..B..0 ). 	% copy of position with depth 0
 
 % basic operation
 max( A, B, A ) :-
@@ -123,11 +121,10 @@ check( _US..W.._R..B.. _D ) :-
 
 % rook is in same row or column
 check( _US..W..Rx : Ry..Bx : By.. _D ) :-	
-	( 
-		Rx = Bx,
-      	Ry = Ry
+	( Rx = Bx,
+      	  Ry = Ry
 	  ;
-	  Qx = Qx,
+	  Rx = Rx,
 	  Ry = By
 	),
 	Rx : Ry \== Bx : By,
