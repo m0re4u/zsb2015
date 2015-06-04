@@ -2,12 +2,13 @@
 % $Id: KRPL.pl,v 1.14 2008/06/10 11:10:53 obooij Exp $
 % from Prolog Programming for AI, Bratko p. 604
 
-% Predicate library for king and rook vs king
+% Predicate library for king and queen vs king
 
-% Position is represented by Side..Wx : Wy..Rx : Ry .. Bx : By .. Depth
+% Position is represented by Side..Wx : Wy..Qx : Qy .. Bx : By .. Depth
 % Side is side to move next ( us or them )
 % Wx, Wy are X and Y coordinates of the white king
-% Rx, Ry are X and Y coordinates of the white rook
+% /////Rx, Ry are X and Y coordinates of the white rook
+% Qx, Qy are X and Y coordinates of white queen
 % Bx, By are the X and Y coordinates of the black king
 % depth is depth of position in the search tree
 
@@ -15,11 +16,12 @@
 
 side( Side.._, Side ).			% side to move in position
 wk( _..WK.._, WK ).			% white king coordinate
-wr( _.._..WR.._, WR ).			% white rook coordinates
+	%wr( _.._..WR.._, WR ).			% white rook coordinates
+w(_.._..Q.._, Q).				% white queen coordinates
 bk( _.._.._..BK.._, BK ).		% black king coordinates
 depth( _.._.._.._..Depth, Depth ).	% depth of position in search tree
 
-resetdepth( S..W..R..B.._D, S..W..R..B..0 ). 	% copy of position with depth 0
+resetdepth( S..W..Q..B.._D, S..W..Q..B..0 ). 	% copy of position with depth 0
 
 % basic operation
 max( A, B, A ) :-
@@ -101,34 +103,35 @@ moveGeneral( depth < Max, Pos, _Move, _Pos1 ) :-
 moveGeneral( depth = D, Pos, _Move, _Pos1 ) :-
 	depth( Pos, D ), !.
 
-moveGeneral( kingdiagfirst, us..W..R..B..D, W-W1, them..W1..R..B..D1 ):-
+moveGeneral( kingdiagfirst, us..W..Q..B..D, W-W1, them..W1..Q..B..D1 ):-
 	D1 is D + 1,
 	ngb( W, W1 ),		% ngb creates diagonal moves first
 	not ngb( W1, B ),	% Must not move into check
-	W1 \== R.		% Must not collide with rook
+	W1 \== Q.		% Must not collide with queen
 
-moveGeneral( legal, them..W..R..B..D, B-B1, us..W..R..B1..D1 ) :-
+moveGeneral( legal, them..W..Q..B..D, B-B1, us..W..Q..B1..D1 ) :-
 	D1 is D + 1,
 	ngb( B, B1 ),
-	not check( us..W..R..B1..D1 ).
+	not check( us..W..Q..B1..D1 ).
 
 legalmove( Pos, Move, Pos1 ):-
 	move( legal, Pos, Move, Pos1 ).
 
 % black king next to white king
-check( _US..W.._R..B.. _D ) :-	
+check( _US..W.._Q..B.. _D ) :-	
 	ngb( W, B ).
 
-% rook is in same row or column
-check( _US..W..Rx : Ry..Bx : By.. _D ) :-	
-	( Rx = Bx,
-      	  Ry = Ry
+% queen is in same row or column
+check( _US..W..Qx : Qy..Bx : By.. _D ) :-	
+	( 
+		Qx = Bx,
+      	Qy = Qy
 	  ;
-	  Rx = Rx,
-	  Ry = By
+	  Qx = Qx,
+	  Qy = By
 	),
-	Rx : Ry \== Bx : By,
-	not inway( Rx : Ry, W, Bx : By ). % not white king between w. rook and b. king
+	Qx : Qy \== Bx : By,
+	not inway( Qx : Qy, W, Bx : By ). % not white king between w. queen and b. king
 
 % piece on the destination spot 
 inway( _S, S1, S1 ) :- !.
@@ -195,13 +198,13 @@ okcsquaremdist( Pos, MDist ) :- % Manhattan distance between WK and critical squ
 	cs( Pos, CS ),
 	manhdist( WK, CS, MDist ).
 
-lpatt( _..W..R..B.._ ,_) :-	% L-pattern
+lpatt( _..W..Q..B.._ ,_) :-	% L-pattern
 	manhdist( W, B, 2 ),
-	manhdist( R, B, 3 ).
+	manhdist( Q, B, 3 ).
 
-okorndle( _Side..W..R.._B.._D, _Side1..W1..R1.._B1.._D1 ) :-
-	dist( W, R, D ),
-	dist( W1, R1, D1 ),
+okorndle( _Side..W..Q.._B.._D, _Side1..W1..Q1.._B1.._D1 ) :-
+	dist( W, Q, D ),
+	dist( W1, Q1, D1 ),
 	D =< D1.
 
 roomgt2(  Pos, _ ) :-
@@ -246,29 +249,29 @@ manhdist( X : Y, X1: Y1, D ) :-	% Manhattan distance
 	D is Dx + Dy.
 
 room( Pos, Room ):-		% area to which the black king is confined
-	wr( Pos, Rx : Ry ),
+	wr( Pos, Qx : Qy ),
 	bk( Pos, Bx : By ),
-	( Bx < Rx, SideX is Rx - 1
+	( Bx < Qx, SideX is Qx - 1
 	  ;
-	  Bx > Rx, SideX is 8 - Rx
+	  Bx > Qx, SideX is 8 - Qx
 	),
 	(
-	  By < Ry, SideY is Ry - 1
+	  By < Qy, SideY is Qy - 1
 	  ;
-	  By > Ry, SideY is 8 - Ry
+	  By > Qy, SideY is 8 - Qy
 	),
 	Room is SideX * SideY, !.
 
-room( _, 64 ).		% rook in line with black king
+room( _, 64 ).		% queen in line with black king
 
-cs( _.._W.. Rx : Ry .. Bx : By .. _, Cx:Cy ) :-
-	( Bx < Rx, !, Cx is Rx - 1
+cs( _.._W.. Qx : Qy .. Bx : By .. _, Cx:Cy ) :-
+	( Bx < Qx, !, Cx is Qx - 1
 	  ;
-	  Cx is Rx + 1
+	  Cx is Qx + 1
 	),
-	( By < Ry, !, Cy is Ry - 1
+	( By < Qy, !, Cy is Qy - 1
 	  ;
-	  Cy is Ry + 1
+	  Cy is Qy + 1
 	).
 
 	
