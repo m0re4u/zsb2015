@@ -22,12 +22,34 @@ move( queenmove, us..W..Qx : Qy..B..D, Qx:Qy - QM, them..W..QM..B..D1 ):-
 		QM = Qx : I
 	;
 		QM = I : Qy
+	;
+		X is Qx + I,
+		Y is Qy + I,
+		X =< 8,
+		Y =< 8,
+		QM = X:Y
+	;
+		X is Qx + I,
+		Y is Qy - I,
+		X =< 8,
+		Y >= 1,
+		QM = X:Y
+	;
+		X is Qx - I,
+		Y is Qy + I,
+		X >= 1,
+		Y =< 8,
+		QM = X:Y
+	;
+		X is Qx - I,
+		Y is Qy - I,
+		X >= 1,
+		Y >= 1,
+		QM = X:Y
 	),
     QM \== Qx : Qy,	% Must have moved
-	Q = Qx:Qy,
-	not inway( QM, W, Q ), 	% white king not in way
-	not inway( Qx : Qy, W, Q ), 	% white king not in way
-	not inway( (Qx : Qy), B, Q ). 	% black king not in way
+	not inway( Qx : Qy, W, QM ), 	% white king not in way
+	not inway( (Qx : Qy), B, QM ). 	% black king not in way
 
 
 move( checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ):-
