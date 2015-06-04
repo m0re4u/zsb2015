@@ -33,21 +33,21 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 		A is Qx + I,
 		B is Qy - I,
 		A =< 8 ,
-		B =< 1,
+		B >= 1,
 		QM = A : B
 	;
 		% low right to high left
 		A is Qx - I,
 		B is Qy + I,
-		A =< 1 ,
+		A >= 1 ,
 		B =< 8,
 		QM = A : B
 	;
 		% high right to low left
 		A is Qx - I,
 		B is Qy - I,
-		A =< 1 ,
-		B =< 1,
+		A >= 1 ,
+		B >= 1,
 		QM = A : B
 	), 
 	QM \== Qx : Qy, 		% must move
