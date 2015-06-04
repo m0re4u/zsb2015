@@ -22,6 +22,8 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 		;
 		QM = I : Qy
 		;*/
+		write(Qx),
+		write(Qy),
 		A is Qx + 1,
 		B is Qy + 1,
 		QM = A : B
