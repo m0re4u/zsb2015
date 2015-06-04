@@ -90,7 +90,7 @@ queendivides(_Side..Wx : Wy..Qx : Qy..Bx : By.._D, _):-
 	ordered(Wx, Qx, Bx),!;
 	ordered(Wy, Qy, By).
 	
-queenlost(_.._..B..B.._, _). % queen has fallen
+queenlost(_.._W..B..B.._, _). % queen has fallen
 
 queenlost(them..W..Q..B.._, _):-
 	ngb(B,Q),		% black king attacks queen
