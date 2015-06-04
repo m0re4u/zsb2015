@@ -14,8 +14,9 @@
 % selector relations needed 
 
 side( Side.._, Side ).			% side to move in position
-wk( _..WK.._, WK ).			% white king coordinate
+wk( _..WK.._, WK ).				% white king coordinate
 wr( _.._..WR.._, WR ).			% white rook coordinates
+wq(_.._..Q.._,Q).				% white queen coordinates
 bk( _.._.._..BK.._, BK ).		% black king coordinates
 depth( _.._.._.._..Depth, Depth ).	% depth of position in search tree
 
