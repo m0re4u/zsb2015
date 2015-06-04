@@ -25,7 +25,7 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 		% low left to high right
 		A is Qx + I,
 		B is Qy + I,
-		A =< 8 ,
+		A =< 8,
 		B =< 8,
 		QM = A : B
 	;
