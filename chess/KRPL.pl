@@ -2,7 +2,7 @@
 % $Id: KRPL.pl,v 1.14 2008/06/10 11:10:53 obooij Exp $
 % from Prolog Programming for AI, Bratko p. 604
 
-% Predicate library for king and queen vs king
+% Predicate library for king and rook vs king
 
 % Position is represented by Side..Wx : Wy..Rx : Ry .. Bx : By .. Depth
 % Side is side to move next ( us or them )
@@ -16,7 +16,7 @@
 side( Side.._, Side ).			% side to move in position
 wk( _..WK.._, WK ).			% white king coordinate
 wr( _.._..WR.._, WR ).			% white rook coordinates
-wq(_.._..Q.._, Q).				% white queen coordinates
+wq(_.._..Q.._, Q).				% white rook coordinates
 bk( _.._.._..BK.._, BK ).		% black king coordinates
 depth( _.._.._.._..Depth, Depth ).	% depth of position in search tree
 
@@ -107,7 +107,7 @@ moveGeneral( kingdiagfirst, us..W..R..B..D, W-W1, them..W1..R..B..D1 ):-
 	D1 is D + 1,
 	ngb( W, W1 ),		% ngb creates diagonal moves first
 	not ngb( W1, B ),	% Must not move into check
-	W1 \== R.		% Must not collide with queen
+	W1 \== R.		% Must not collide with rook
 
 moveGeneral( legal, them..W..R..B..D, B-B1, us..W..R..B1..D1 ) :-
 	D1 is D + 1,
@@ -131,7 +131,7 @@ check( _US..W..Rx : Ry..Bx : By.. _D ) :-
 	  Ry = By
 	),
 	Rx : Ry \== Bx : By,
-	not inway( Rx : Ry, W, Bx : By ). % not white king between w. queen and b. king
+	not inway( Rx : Ry, W, Bx : By ). % not white king between w. rook and b. king
 
 % piece on the destination spot 
 inway( _S, S1, S1 ) :- !.
@@ -262,7 +262,7 @@ room( Pos, Room ):-		% area to which the black king is confined
 	),
 	Room is SideX * SideY, !.
 
-room( _, 64 ).		% queen in line with black king
+room( _, 64 ).		% rook in line with black king
 
 cs( _.._W.. Rx : Ry .. Bx : By .. _, Cx:Cy ) :-
 	( Bx < Rx, !, Cx is Rx - 1
