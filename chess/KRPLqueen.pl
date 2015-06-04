@@ -22,8 +22,6 @@ move(queenmove, us..W..Qx : Qy..B..D,Qx:Qy - QM, them..W..QM..B..D1):-
 		;
 		QM = I : Qy
 		;*/
-		write(Qx),
-		write(Qy),
 		A is Qx + 1,
 		B is Qy + 1,
 		QM = A : B
@@ -92,7 +90,7 @@ queendivides(_Side..Wx : Wy..Qx : Qy..Bx : By.._D, _):-
 	ordered(Wx, Qx, Bx),!;
 	ordered(Wy, Qy, By).
 	
-queenlost(_.._W..B..B.._, _). % queen has fallen
+queenlost(_.._..B..B.._, _). % queen has fallen
 
 queenlost(them..W..Q..B.._, _):-
 	ngb(B,Q),		% black king attacks queen
