@@ -101,8 +101,43 @@ move( checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ):-
 	not inway( Qx1 : Qy, W, Bx : By ),
 	move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ).
 	
-move(move_queen_away, Pos, Move, NewPos):-
-	move(queenmove, Pos, Move, NewPos).
+move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
+	wq( Pos, Qx : Qy ),		% white queen position
+	wk( Pos, W ), 			% white king position
+	(
+		(	% low left
+			Qx < 4,
+			Qy < 4,
+			Qx1 is Qx + 1,
+			Qy1 is Qy + 1
+		;	% high left
+			Qx < 4,
+			Qy > 5,
+			Qx1 is Qx + 1,
+			Qy1 is Qy - 1
+		;	% low right
+			Qx > 5,
+			Qy < 4,
+			Qx1 is Qx - 1,
+			Qy1 is Qy + 1
+		;	% high right
+			Qx > 5,
+			Qy > 5,
+			Qx1 is Qx - 1,
+			Qy1 is Qy - 1
+		),
+		not inway( Qx : Qy, W, Qx1 : Qy1 ),
+		move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 )
+	;
+		(
+			Qx < 4,
+			Qx1 is Qx + 2
+		;
+			Qx > 5,
+			Qx1 is Qx - 2
+		),
+		move( queenmove, Pos, Qx : Qy - Qx1 : Qy, Pos1 )
+	).
 
 move( legal, us..P, M, P1 ) :-
 	(
