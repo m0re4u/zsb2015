@@ -30,7 +30,7 @@ advice( mate_in_3,
 	( depth = 1 ) and legal then ( depth = 2 ) and legal ).
 	
 advice (avoidstalemate,
-	stalemate :
+	not stalemate :
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
 	nomove ).
