@@ -26,7 +26,7 @@ advice( mate_in_2,
 advice( squeeze, 
 	newroomsmaller and not queenexposed and queendivides and not stalemate :
 	not queenlost :
-	( depth = 0 ) and queenmove:
+	( depth = 1 ) and queenmove:
 	nomove ).
 	
 advice( approach, 
