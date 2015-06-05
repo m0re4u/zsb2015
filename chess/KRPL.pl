@@ -80,14 +80,15 @@ ngb( S, S1 ) :-
 end_of_game( Pos ):-
 	mate( Pos ).
 
-coord(1).
-coord(2).
-coord(3).
-coord(4).
-coord(5).
-coord(6).
-coord(7).
 coord(8).
+coord(7).
+coord(6).
+coord(5).
+coord(4).
+coord(3).
+coord(2).
+coord(1).
+
 
 % move constraints predicates
 % these are specialized move generators:
