@@ -131,6 +131,45 @@ check( _US..W..Rx : Ry..Bx : By.. _D ) :-
 	Rx : Ry \== Bx : By,
 	not inway( Rx : Ry, W, Bx : By ). % not white king between w. rook and b. king
 
+% check queen for same row, diagonal row or column 
+check(_US..W..Qx : Qy..Bx : By.._D ) :-
+	coord(I),
+	( 
+		% horizontal
+		Qx = Bx,
+		Qy = Qy
+	;
+		% vertical
+		Qx = Qx,
+		Qy = By
+	;	
+		% low left to high right  
+		Qx is Bx + I,
+		Qy is By + I,
+		Qx =< 8,
+		Qy =< 8
+	;
+		% high left to low right
+		Qx is Bx + I,
+		Qy is By - I,
+		Qx =< 8,
+		Qy >= 1
+	;
+		% low right to high left
+		Qx is Bx - I,
+		Qy is By + I,
+		Qx >= 1,
+		Qy =< 8
+	;
+		% high right to low left
+		Qx is Bx - I,
+		Qy is By - I,
+		Qx >= 1,
+		Qy >= 1
+	),
+	% not the white king between the queen and black king
+	not inway( Qx1 : Qy, W, Bx : By ),
+	
 % piece on the destination spot 
 inway( _S, S1, S1 ) :- !.
 
