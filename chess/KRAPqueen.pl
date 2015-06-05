@@ -33,7 +33,7 @@ advice (avoidstalemate,
 	stalemate :
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
-	nomove.).
+	nomove ).
 	
 advice( squeeze, 
 	newroomsmaller and not queenexposed and queendivides and not stalemate :
