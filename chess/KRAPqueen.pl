@@ -33,7 +33,7 @@ advice(avoidstalemate,
 	stalemate:
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
-	nomove ).
+	( depth = 1 ) and legalmove ).
 	
 advice( approach, 
 okapproachedsquare and not queenexposed and not stalemate and (queendivides or lpatt) and (roomgt2 or not our_king_edge) and not stalemate:
