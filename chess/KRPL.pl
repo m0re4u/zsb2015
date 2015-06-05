@@ -168,7 +168,7 @@ check(_US..W..Qx : Qy..Bx : By.._D ) :-
 		Qy >= 1
 	),
 	% not the white king between the queen and black king
-	not inway( Qx : Qy, W, Bx : By ),
+	not inway( Qx : Qy, W, Bx : By ).
 	
 % piece on the destination spot 
 inway( _S, S1, S1 ) :- !.
