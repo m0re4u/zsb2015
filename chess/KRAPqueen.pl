@@ -23,6 +23,12 @@ advice( mate_in_2,
 	( depth = 0 ) and legal then ( depth = 2 ) and checkmove:
 	( depth = 1 ) and legal ).
 	
+advice( mate_in_3, 
+	mate :
+	not queenlost and their_king_edge :
+	( depth = 0 ) and legal then ( depth = 2 ) and legal then ( depth = 4 ) and checkmove:
+	( depth = 1 ) and legal then ( depth = 2 ) and legal ).
+	
 advice( squeeze, 
 	newroomsmaller and not queenexposed and queendivides and not stalemate :
 	not queenlost :
