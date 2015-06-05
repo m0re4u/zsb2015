@@ -48,7 +48,7 @@ okapproachedsquare and not queenexposed and not stalemate and (queendivides or l
 	nomove ).
 
 advice( keeproom, 
-themtomove and not queenexposed and queendivides and okorndle and (roomgt2 or not our_king_edge):
+themtomove and not queenexposed and queendivides and okorndle and (roomgt2 or not our_king_edge) and not stalemate:
 	not queenlost:
 	( depth = 0 ) and kingdiagfirst:
 	nomove ).
