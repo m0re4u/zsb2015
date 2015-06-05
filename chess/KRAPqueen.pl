@@ -6,10 +6,10 @@
 % all rules
 
 else_rule :: if their_king_edge and kings_close
-	then [ mate_in_2, mate_in_3, squeeze, approach, keeproom, avoid_stalemate, divide_in_2, divide_in_3 ].
+	then [ mate_in_2, mate_in_3, squeeze, approach, keeproom, avoidstalemate, divide_in_2, divide_in_3 ].
 
 else_rule :: if true
-	then [ squeeze, approach, keeproom,  avoid_stalemate, divide_in_2, divide_in_3].
+	then [ squeeze, approach, keeproom,  avoidstalemate, divide_in_2, divide_in_3].
 	
 % pieces of advice
 % structure:
@@ -29,7 +29,7 @@ advice( mate_in_3,
 	( depth = 0 ) and legal then ( depth = 2 ) and legal then ( depth = 4 ) and checkmove:
 	( depth = 1 ) and legal then ( depth = 2 ) and legal ).
 	
-advice (avoidstalemate,
+advice(avoidstalemate,
 	stalemate:
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
