@@ -6,7 +6,7 @@
 % all rules
 
 else_rule :: if their_king_edge and kings_close
-	then [ mate_in_2, mate_in_3, squeeze, approach, keeproom, divide_in_2, divide_in_3 ].
+	then [ mate_in_2, mate_in_3y, squeeze, approach, keeproom, divide_in_2, divide_in_3 ].
 
 else_rule :: if true
 	then [ squeeze, approach, keeproom, divide_in_2, divide_in_3].
@@ -32,7 +32,7 @@ advice( mate_in_3,
 advice( squeeze, 
 	newroomsmaller and not queenexposed and queendivides and not stalemate :
 	not queenlost :
-	( depth = 1 ) and queenmove:
+	( depth = 0 ) and queenmove:
 	nomove ).
 	
 advice( approach, 
