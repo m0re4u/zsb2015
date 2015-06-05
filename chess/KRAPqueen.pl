@@ -30,15 +30,9 @@ advice( mate_in_3,
 	( depth = 1 ) and legal then ( depth = 2 ) and legal ).
 	
 advice (avoidstalemate,
-	themtomove and stalemate  :
+	stalemate:
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
-	nomove ).
-	
-advice( squeeze, 
-	newroomsmaller and not queenexposed and queendivides and not stalemate :
-	not queenlost :
-	( depth = 0 ) and queenmove:
 	nomove ).
 	
 advice( approach, 
@@ -53,6 +47,12 @@ themtomove and not queenexposed and queendivides and okorndle and (roomgt2 or no
 	( depth = 0 ) and kingdiagfirst:
 	nomove ).
 
+advice( squeeze, 
+	newroomsmaller and not queenexposed and queendivides and not stalemate :
+	not queenlost :
+	( depth = 0 ) and queenmove:
+	nomove ).
+	
 advice( divide_in_2, 
 themtomove and queendivides and not queenexposed:
 	not queenlost:
