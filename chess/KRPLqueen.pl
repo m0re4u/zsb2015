@@ -102,7 +102,7 @@ move( checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ):-
 	move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ).
 	
 move(move_queen_away, Pos, Move, NewPos):-
-	move(legal, Pos, Move, NewPos).
+	move(queenmove, Pos, Move, NewPos).
 
 move( legal, us..P, M, P1 ) :-
 	(
