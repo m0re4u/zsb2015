@@ -8,6 +8,9 @@
 else_rule :: if their_king_edge and kings_close
 	then [ mate_in_2, mate_in_3, squeeze, approach, avoidstalemate, keeproom, divide_in_2, divide_in_3 ].
 
+else_rule :: if stalemate
+	then [advoidstalemate].
+	
 else_rule :: if true
 	then [ squeeze, approach, keeproom,  avoidstalemate, divide_in_2, divide_in_3].
 	
@@ -30,7 +33,7 @@ advice( mate_in_3,
 	( depth = 1 ) and legal then ( depth = 2 ) and legal ).
 	
 advice(avoidstalemate,
-	stalemate:
+	not stalemate:
 	not queenlost :
 	( depth = 0 ) and move_queen_away:
 	( depth = 1 ) and legalmove ).
