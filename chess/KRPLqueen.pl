@@ -169,3 +169,5 @@ queenlost( them..W..Q..B.._ ,_) :-
 	ngb( B, Q ),	% black king attacks queen
 	not ngb( W, Q ).	% white king does not defend
 
+queensame(us..W..Q..B.._,them.._..Q.._.._).
+
