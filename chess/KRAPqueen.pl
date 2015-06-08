@@ -6,9 +6,6 @@
 % all rules
 else_rule :: if their_king_edge and kings_close
 	then [ mate_in_2, mate_in_3, squeeze, approach, avoidstalemate, keeproom, divide_in_2, divide_in_3 ].
-
-stalemate_rule :: if stalemate
-	then [ advoidstalemate ].
 	
 else_rule :: if true
 	then [ squeeze, approach, keeproom,  avoidstalemate, divide_in_2, divide_in_3].
