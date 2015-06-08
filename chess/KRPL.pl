@@ -192,8 +192,8 @@ inway( X1:Y1, X2:Y2, X3:Y3 ) :-
   D2 is D3.
 
 %diagonal, moving right-bottom to left-top
-inway( X1:Y3, X2:Y2, X3:Y1 ) :-
-  orderedBoth( X1:Y1, X2:Y2, X3:Y3 ),
+inway( X1:Y1, X2:Y2, X3:Y3 ) :-
+  orderedBoth( X1:Y3, X2:Y2, X3:Y1 ),
   D1 is X1-Y1,
   D2 is X2-Y2,
   D3 is X3-Y3,
