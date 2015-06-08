@@ -220,7 +220,7 @@ stalemate( Pos, _ ) :-
 	not check( Pos ),	% black king is not checked
 	not legalmove( Pos, _, _ ),
 	write( 'Stalemate' ).	% black can play no valid move
-
+	
 newroomsmaller( Pos, RootPos ) :-
 	room( Pos, Room ),
 	room( RootPos, RootRoom ),

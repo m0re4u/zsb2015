@@ -170,4 +170,4 @@ queenlost( them..W..Q..B.._ ,_) :-
 	not ngb( W, Q ).	% white king does not defend
 
 queensame(us..W..Qx:Qy..B.._, _):-
-	move(_, _.._..Qx:Qy.._.._, _ , _.._..Qx:Qy.._.._).
+	move(_, us..W..Qx:Qy..B.._, _ , them.._..Qx:Qy.._.._).
