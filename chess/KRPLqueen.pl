@@ -126,8 +126,7 @@ move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 			Qx1 is Qx - 1,
 			Qy1 is Qy - 1
 		),
-		not inway( Qx : Qy, W, Qx1 : Qy1 ),
-		move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 )
+		not inway( Qx : Qy, W, Qx1 : Qy1 )
 	;
 		(
 			Qx < 4,
@@ -135,8 +134,7 @@ move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 		;
 			Qx > 5,
 			Qx1 is Qx - 2
-		),
-		move( queenmove, Pos, Qx : Qy - Qx1 : Qy, Pos1 )
+		)
 	).
 
 move( legal, us..P, M, P1 ) :-
