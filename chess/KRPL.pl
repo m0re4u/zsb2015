@@ -250,6 +250,11 @@ roomgt2(  Pos, _ ) :-
 	%write( 'Room > 2? ' ), write( Room ), nl,
 	Room > 2.
 
+roomsm2(  Pos, _ ) :-
+	room( Pos, Room ),
+	%write( 'Room < 2? ' ), write( Room ), nl,
+	Room < 2.
+	
 our_king_edge( _..1:_Y.._.._.._ , _ ):- !.
 our_king_edge( _..8:_Y.._.._.._ , _ ):- !.
 our_king_edge( _.._X:1.._.._.._ , _ ):- !.
