@@ -86,7 +86,7 @@ class BoardTrans
         
     StudentBoardTrans.BoardLocation location = boardTrans.boardLocation;
     BoardLocation realLocation = new BoardLocation(boardTrans.pos);
-
+	
     System.out.println("You think position " + boardTrans.pos + " is at (" +
                        location.column + "," + location.row +
                        "), the correct answer is (" + realLocation.column +
@@ -141,7 +141,7 @@ class StudentBoardTrans
   {
     board = new ChessBoard();
     pos = position;
-    boardLocation = new BoardLocation();
+    boardLocation = new BoardLocation(pos);
   }
 
   public Point toCartesian(int column, int row)
@@ -164,10 +164,13 @@ class StudentBoardTrans
   class BoardLocation{
     public int row;
     public int column;
-      
-    public BoardLocation()
+    
+    
+    public BoardLocation(String position)
     {
-      // write this function. Compute the row and column correspoding to String pos.
+		System.out.println(position);
+		position.split
+		
 
       row=23; // ????
       column=23; // ????
