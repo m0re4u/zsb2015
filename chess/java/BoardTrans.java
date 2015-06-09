@@ -155,14 +155,14 @@ class StudentBoardTrans
 	double x = 0;
 	x = (board.coords.x - board.sur_x) - 
 		(((7 - column) * board.delta_x) + (board.delta_x / 2));
-	
 	double y = 0;
 	y = (board.coords.y + board.sur_y) + 
 		(((7 - row) * board.delta_y) + (board.delta_y/2));
-	
 	double z = board.board_thickness;
 
-    Point result = new Point (x,y,z);
+	double newx = (Math.cos(board.theta) * x) + (Math.sin(board.theta) * y);
+	double newy = (-Math.sin(board.theta) * x) + (Math.cos(board.theta) * y);
+    Point result = new Point (newx,newy,z);
     return(result);
   }
 
