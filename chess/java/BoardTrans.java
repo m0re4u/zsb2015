@@ -54,24 +54,25 @@ class BoardTrans
      * and the chess_piece editor from SCIL.
      */
     try {  
-      System.out.println("The dimensions of the squares on the board are " +
-         // ????
-         " by " +
-         // ????
-         "mm");
+
+		System.out.println("The dimensions of the squares on the board are " +
+        	String.valueOf(boardTrans.board.delta_x)
+        	+ " by " + 
+        	String.valueOf(boardTrans.board.delta_y) 
+        	+ "mm");
   
-      System.out.println("The x,y coordinates of the board are " +
-         // ????
-         ","
-         // ????
-         );
+		System.out.println("The x,y coordinates of the board are " +
+			String.valueOf(boardTrans.board.coords.x)
+	        + "," +
+    	    String.valueOf(boardTrans.board.coords.y)
+        	);
   
-      System.out.println("The height of the piece at " + boardTrans.pos + " is " +
-         // ????
-         " mm");
+     	System.out.println("The height of the piece at " + boardTrans.pos + " is " +
+			String.valueOf(boardTrans.board.getHeight(boardTrans.pos)) +
+     	   " mm");
     
-      System.out.println("The color of the piece at " + boardTrans.pos + " is "
-             // ????
+      System.out.println("The color of the piece at " + boardTrans.pos + " is " +
+             String.valueOf(boardTrans.board.getSide(boardTrans.pos))
              );
     } catch (Exception e) {
       System.out.println(e);
@@ -146,18 +147,22 @@ class StudentBoardTrans
 
   public Point toCartesian(int column, int row)
   {
-    // write this function
-
     /* You can ignore the normal of the board, i.e. we assume the chess
      * board always lies flat on the table.
      */
+	System.out.println(row);
+	System.out.println(column);
+	double x = 0;
+	x = (board.coords.x - board.sur_x) - 
+		(((7 - column) * board.delta_x) + (board.delta_x / 2));
+	
+	double y = 0;
+	y = (board.coords.y + board.sur_y) + 
+		(((7 - row) * board.delta_y) + (board.delta_y/2));
+	
+	double z = board.board_thickness;
 
-    Point result = new Point ();
-    
-    result.x = 23; // ????
-    result.y = 23; // ????
-    result.z = 23; // ????
-    
+    Point result = new Point (x,y,z);
     return(result);
   }
 
