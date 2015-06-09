@@ -141,7 +141,7 @@ class StudentBoardTrans
   {
     board = new ChessBoard();
     pos = position;
-    boardLocation = new BoardLocation();
+    boardLocation = new BoardLocation(pos);
   }
 
   public Point toCartesian(int column, int row)
@@ -166,15 +166,13 @@ class StudentBoardTrans
     public int column;
     
     
-    public BoardLocation()
+      public BoardLocation(String position()
     {
-    	char ch1 = pos.charAt(0);
-    	char ch2 = pos.charAt(1);
-		row = Character.getNumericValue(ch2) - 1;
-		column = Character.getNumericValue(ch1) - 10;
+	System.out.println(position);
 		
-		System.out.println(row);
-		System.out.println(column);
+
+      row=23; // ????
+      column=23; // ????
     }
   }
 }
