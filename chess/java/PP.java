@@ -43,6 +43,7 @@ public class PP {
   private static double LOW_HEIGHT=40;
   private static double OPEN_GRIP=30;
   private static double CLOSED_GRIP=0;
+  public static int piecesMovedToGarbage = 0;
 
   public static void main(String[] args){
     Vector <GripperPosition> p = new Vector<GripperPosition>();
@@ -186,14 +187,13 @@ public class PP {
 
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g) {
 
-	private double piecesMovedToGarbage = 0;
 	double pHeight = 200;
 
     // Use the boardLocation and toCartesian methods you wrote:
     StudentBoardTrans studentBoardTrans = new StudentBoardTrans(to);
     
     try{
-    piece_height = b.getHeight(to);
+    pHeight = b.getHeight(to);
     } catch (Exception e) {
         System.out.println(e);
         System.out.println("Something went wrong");
@@ -207,52 +207,77 @@ public class PP {
 	System.out.println(cart1);
 	
 	GripperPosition position1 = new GripperPosition(cart1, 0, OPEN_GRIP);
-	p.add(position1);
+	g.add(position1);
 	
 	// SECOND POSITION 
 	Point cart2 = studentBoardTrans.toCartesian(checkedColumn, checkedRow); 
 	cart2.z = LOW_HEIGHT; 
 	GripperPosition position2 = new GripperPosition(cart2, 0, OPEN_GRIP);
-	p.add(position2);
+	g.add(position2);
 	
 	// THIRD POSITION
 	double C_HEIGHT = 0.5 * pHeight; 
 	Point cart3 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
 	cart3.z = C_HEIGHT;
 	GripperPosition position3 = new GripperPosition(cart3, 0, OPEN_GRIP);
-	p.add(position3);
+	g.add(position3);
 	
 	// FOURTH POSITION
 	GripperPosition position4 = new GripperPosition(cart3, 0, CLOSED_GRIP);
-	p.add(position4);
+	g.add(position4);
 	
 	// FIFTH POSITION
 	Point cart5 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
 	cart5.z = SAFE_HEIGHT;
 	GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
-	p.add(position5);
+	g.add(position5);
 	
 	// STARTING TO MOVE OFF THE BOARD ** DANGER DANGER!
 	// SIXTH POSITION
-	Point cart6 = studentBoardTrans.toCartesian
+	Point cart6 = getGarbagePileCoords(b);
+	cart6.z = SAFE_HEIGHT;
+	GripperPosition position6 = new GripperPosition(cart6, 0, CLOSED_GRIP);
+	g.add(position5);
+
+    // SEVENTH POSITION
+	double LOW_HALF_P = LOW_HEIGHT + (0.5 * pHeight);
+	cart6.z = LOW_HALF_P;
+	GripperPosition position7 = new GripperPosition(cart6, 0, CLOSED_GRIP);
+	g.add(position7);
+	
+	// EIGHTH POSITION
+	double HL_HP = (0.5* LOW_HEIGHT) + (0.5 * pHeight);
+	cart6.z = HL_HP;
+	GripperPosition position8 = new GripperPosition(cart6, 0, CLOSED_GRIP);
+	g.add(position8);
+	
+	// NINTH POSITION
+	double HALF_LOW = 0.5 * LOW_HEIGHT;
+	cart6.z = HALF_LOW;
+	GripperPosition position9 = new GripperPosition(cart6, 0, OPEN_GRIP);
+	g.add(position9);
+	
+	// TENTH POSITION
+	cart6.z = SAFE_HEIGHT;
+    GripperPosition position10 = new GripperPosition(cart6, 0, OPEN_GRIP);
+    g.add(position10);
+
     
     System.out.println("**** In movoToGarbage"); 
 
   }
-  private static void getGarbagePileCoords(Chessboard b){
+  private static Point getGarbagePileCoords(ChessBoard b){
 	double hor = b.coords.x;
 	double dist = b.sur_x;
 	
 	piecesMovedToGarbage++;
-	
-	Point garbagePoint;
-	garbagepoint.x = hor + 2 * dist;
-	if(piecesMovedToGarbage =< 8){
-		garbagepoint.x = hor + 2 * dist;
-		garbagepoint.y = b.coords.y + piecesMovedToGarbage * b.delta_y;
-	} else{
-		garbagepoint.x = hor + 2 * dist + b.delta_x;
-		garbagepoint.y = b.coords.y + piecesMovedToGarbage - 9 * b.delta_y;
+	Point garbagePoint = new Point(hor + 2 * dist, b.coords.y, SAFE_HEIGHT);
+	if (piecesMovedToGarbage <= 8) {
+		garbagePoint.x = hor + 2 * dist;
+		garbagePoint.y = b.coords.y + piecesMovedToGarbage * b.delta_y;
+	} else {
+		garbagePoint.x = hor + 2 * dist + b.delta_x;
+		garbagePoint.y = b.coords.y + piecesMovedToGarbage - 9 * b.delta_y;
 	}
 	
 	return garbagePoint;
