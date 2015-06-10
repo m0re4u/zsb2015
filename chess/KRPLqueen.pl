@@ -17,7 +17,7 @@ move(A,B,C,D):-
 move( queenmove, us..W..Qx : Qy..B..D, Qx:Qy - QM, them..W..QM..B..D1 ):-
 	D1 is D + 1,
 	coord( I ),		% integer between 1 and 8
-	% move horizontally of vertically
+	% move horizontally of vertically or diagonally
 	(
 		% horizontal
 		QM = Qx : I
@@ -57,7 +57,7 @@ move( queenmove, us..W..Qx : Qy..B..D, Qx:Qy - QM, them..W..QM..B..D1 ):-
 	not inway( Qx : Qy, W, QM ), 	% white king not in way
 	not inway( (Qx : Qy), B, QM ). 	% black king not in way
 
-
+% move to place black king in check
 move( checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ):-
 	wk( Pos, W ), 			% white king position
 	wq( Pos, Qx : Qy ),		% white queen position
@@ -101,10 +101,11 @@ move( checkmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ):-
 	not inway( Qx1 : Qy, W, Bx : By ),
 	move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 ).
 	
+% move away to avoid stalemate
 move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 	wq( Pos, Qx : Qy ),		% white queen position
 	wk( Pos, W ), 			% white king position
-	(
+	(		% move diagonally towards the middle of the board
 		(	% low left
 			Qx < 4,
 			Qy < 4,
@@ -129,7 +130,8 @@ move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 		not inway( Qx : Qy, W, Qx1 : Qy1 ),
 		move( queenmove, Pos, Qx : Qy - Qx1 : Qy1, Pos1 )
 	;
-		(
+			% move horizontally if diagonally is not possible
+		(	
 			Qx < 4,
 			Qx1 is Qx + 2
 		;
@@ -139,6 +141,7 @@ move(move_queen_away, Pos, Qx : Qy - Qx1 : Qy1, Pos1):-
 		move( queenmove, Pos, Qx : Qy - Qx1 : Qy, Pos1 )
 	).
 
+% specify legal moves
 move( legal, us..P, M, P1 ) :-
 	(
 		MC = kingdiagfirst
@@ -158,6 +161,7 @@ queenexposed( Side..W..Q..B.._D, _ ) :-
 		D1 > D2
 	).
 
+% queen divides black and white king
 
 queendivides( _Side..Wx : Wy..Qx : Qy..Bx : By.._D, _ ) :-
 	ordered( Wx, Qx, Bx ), !;
