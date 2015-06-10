@@ -182,24 +182,79 @@ public class PP {
     GripperPosition position10 = new GripperPosition(cart9, 0, OPEN_GRIP);
     p.add(position10);
 	
-    /* Example of adding a gripperposition to Vector p.
-     * Point tempPoint;
-     * GripperPosition temp;
-     * tempPoint = new Point(x-coordinate, y-coordinate, z-coordinate);
-     * temp = new GripperPosition(tempPoint, angle, CLOSED_GRIP/OPEN_GRIP);
-     * Now you only have to add it at the end of Vector p.
-     */
   }
 
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g) {
 
-    /* When you're done with highPath(), incorporate this function.
-     * It should remove a checked piece from the board.
-     * In main() you have to detect if the computer move checks a white
-     * piece, and if so call this function to remove the white piece from
-     * the board first.
-     */
+	private double piecesMovedToGarbage = 0;
+	double pHeight = 200;
+
+    // Use the boardLocation and toCartesian methods you wrote:
+    StudentBoardTrans studentBoardTrans = new StudentBoardTrans(to);
+    
+    try{
+    piece_height = b.getHeight(to);
+    } catch (Exception e) {
+        System.out.println(e);
+        System.out.println("Something went wrong");
+    }
+
+    // FIRST POSITION     
+	int checkedColumn = studentBoardTrans.boardLocation.column;
+    int checkedRow = studentBoardTrans.boardLocation.row;
+    Point cart1 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
+    cart1.z = SAFE_HEIGHT;   
+	System.out.println(cart1);
+	
+	GripperPosition position1 = new GripperPosition(cart1, 0, OPEN_GRIP);
+	p.add(position1);
+	
+	// SECOND POSITION 
+	Point cart2 = studentBoardTrans.toCartesian(checkedColumn, checkedRow); 
+	cart2.z = LOW_HEIGHT; 
+	GripperPosition position2 = new GripperPosition(cart2, 0, OPEN_GRIP);
+	p.add(position2);
+	
+	// THIRD POSITION
+	double C_HEIGHT = 0.5 * pHeight; 
+	Point cart3 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
+	cart3.z = C_HEIGHT;
+	GripperPosition position3 = new GripperPosition(cart3, 0, OPEN_GRIP);
+	p.add(position3);
+	
+	// FOURTH POSITION
+	GripperPosition position4 = new GripperPosition(cart3, 0, CLOSED_GRIP);
+	p.add(position4);
+	
+	// FIFTH POSITION
+	Point cart5 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
+	cart5.z = SAFE_HEIGHT;
+	GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	p.add(position5);
+	
+	// STARTING TO MOVE OFF THE BOARD ** DANGER DANGER!
+	// SIXTH POSITION
+	Point cart6 = studentBoardTrans.toCartesian
+    
     System.out.println("**** In movoToGarbage"); 
 
   }
+  private static void getGarbagePileCoords(Chessboard b){
+	double hor = b.coords.x;
+	double dist = b.sur_x;
+	
+	piecesMovedToGarbage++;
+	
+	Point garbagePoint;
+	garbagepoint.x = hor + 2 * dist;
+	if(piecesMovedToGarbage =< 8){
+		garbagepoint.x = hor + 2 * dist;
+		garbagepoint.y = b.coords.y + piecesMovedToGarbage * b.delta_y;
+	} else{
+		garbagepoint.x = hor + 2 * dist + b.delta_x;
+		garbagepoint.y = b.coords.y + piecesMovedToGarbage - 9 * b.delta_y;
+	}
+	
+	return garbagePoint;
+	}
 }
