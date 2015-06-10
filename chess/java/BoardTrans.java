@@ -160,8 +160,12 @@ class StudentBoardTrans
 		(((7 - row) * board.delta_y) + (board.delta_y/2));
 	double z = board.board_thickness;
 
-	double newx = (Math.cos(board.theta) * x) + (Math.sin(board.theta) * y);
-	double newy = (-Math.sin(board.theta) * x) + (Math.cos(board.theta) * y);
+	double radangle = Math.toRadians(board.theta);
+	double cosAlpha = Math.cos(radangle);
+	double sinAlpha = Math.sin(radangle);
+	double newx = (cosAlpha * (x - board.coords.x)) + (sinAlpha * (y - board.coords.y)) + board.coords.x;
+	double newy = (-sinAlpha * (x - board.coords.x)) + (cosAlpha * (y - board.coords.y)) + board.coords.y;
+
     Point result = new Point (newx,newy,z);
     return(result);
   }
@@ -177,9 +181,6 @@ class StudentBoardTrans
     	char ch2 = pos.charAt(1);
 		row = Character.getNumericValue(ch2) - 1;
 		column = Character.getNumericValue(ch1) - 10;
-		
-		System.out.println(row);
-		System.out.println(column);
     }
   }
 }
