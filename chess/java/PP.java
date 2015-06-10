@@ -101,17 +101,87 @@ public class PP {
 
     System.out.println("**** In high path"); 
 
-    // ???? Write this function
+    double pHeight = 200;
 
     // Use the boardLocation and toCartesian methods you wrote:
     StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
+    StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);
+    
+    try{
+    pHeight = b.getHeight(from);
+    } catch (Exception e) {
+        System.out.println(e);
+        System.out.println("something went wrong");
+    }
 
-    /* Example of getting the columns and the row indices:
-     * fromColumn = studentBoardTrans.boardLocation.column;
-     * fromRow = studentBoardTrans.boardLocation.row;
-     */
-
-
+    // FIRST POSITION     
+	int fromColumn = studentBoardTrans.boardLocation.column;
+    int fromRow = studentBoardTrans.boardLocation.row;
+    Point cart1 = studentBoardTrans.toCartesian(fromColumn, fromRow);
+    cart1.z = SAFE_HEIGHT;   
+	System.out.println(cart1);
+	
+	GripperPosition position1 = new GripperPosition(cart1, 0, OPEN_GRIP);
+	p.add(position1);
+	
+	// SECOND POSITION 
+	Point cart2 = studentBoardTrans.toCartesian(fromColumn, fromRow); 
+	cart2.z = LOW_HEIGHT; 
+	GripperPosition position2 = new GripperPosition(cart2, 0, OPEN_GRIP);
+	p.add(position2);
+	
+	// THIRD POSITION
+	double C_HEIGHT = 0.5 * pHeight; 
+	Point cart3 = studentBoardTrans.toCartesian(fromColumn, fromRow);
+	cart3.z = C_HEIGHT;
+	GripperPosition position3 = new GripperPosition(cart3, 0, OPEN_GRIP);
+	p.add(position3);
+	
+	// FOURTH POSITION
+	GripperPosition position4 = new GripperPosition(cart3, 0, CLOSED_GRIP);
+	p.add(position4);
+	
+	// FIFTH POSITION
+	Point cart5 = studentBoardTrans.toCartesian(fromColumn, fromRow);
+	cart5.z = SAFE_HEIGHT;
+	GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	p.add(position5);
+	
+	// SIXT POSITION
+	int toColumn = studentBoardTrans2.boardLocation.column;
+    int toRow = studentBoardTrans2.boardLocation.row;
+	Point cart6 = studentBoardTrans2.toCartesian(toColumn, toRow);
+	cart6.z = SAFE_HEIGHT;
+	GripperPosition position6 = new GripperPosition(cart6, 0, CLOSED_GRIP);
+	p.add(position6);
+	
+	// SEVENTH POSITION
+	double LOW_HALF_P = LOW_HEIGHT + (0.5 * pHeight);
+	Point cart7 = studentBoardTrans2.toCartesian(toColumn, toRow);
+	cart7.z = LOW_HALF_P;
+	GripperPosition position7 = new GripperPosition(cart7, 0, CLOSED_GRIP);
+	p.add(position7);
+	
+	// EIGHTH POSITION
+	double HL_HP = (0.5* LOW_HEIGHT) + (0.5 * pHeight);
+	Point cart8 = studentBoardTrans2.toCartesian(toColumn, toRow);
+	cart8.z = HL_HP;
+	GripperPosition position8 = new GripperPosition(cart8, 0, CLOSED_GRIP);
+	p.add(position8);
+	
+	// NINTH POSITION
+	double HALF_LOW = 0.5 * LOW_HEIGHT;
+	Point cart9 = studentBoardTrans2.toCartesian(toColumn, toRow);
+	cart9.z = HALF_LOW;
+	GripperPosition position9 = new GripperPosition(cart8, 0, OPEN_GRIP);
+	p.add(position9);
+	
+	// TENTH POSITION
+	Point cart10 = studentBoardTrans2.toCartesian(toColumn, toRow);
+	cart10.z = SAFE_HEIGHT;
+    GripperPosition position10 = new GripperPosition(cart9, 0, OPEN_GRIP);
+    p.add(position10);
+	
     /* Example of adding a gripperposition to Vector p.
      * Point tempPoint;
      * GripperPosition temp;
