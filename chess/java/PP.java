@@ -40,11 +40,12 @@ import java.util.Vector;
 import java.util.ArrayList;
 
 public class PP {
-  private static double SAFE_HEIGHT=200;
-  private static double LOW_HEIGHT=40;
-  private static double OPEN_GRIP=30;
-  private static double CLOSED_GRIP=0;
-  public static int piecesMovedToGarbage = 0;
+	private static double SAFE_HEIGHT=200;
+	private static double LOW_HEIGHT=40;
+	private static double OPEN_GRIP=30;
+	private static double CLOSED_GRIP=0;
+	private static double LOWPATH HEIGHT=20;”
+	public static int piecesMovedToGarbage = 0;
 
   public static void main(String[] args){
     Vector <GripperPosition> p = new Vector<GripperPosition>();
@@ -185,13 +186,14 @@ public class PP {
 	
   } 
   
-  private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
+  private void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
   	
 	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
 	
+	DistanceMatrix.distanceTransform(b, to);
 	
 	while(true){
 		int value = DistanceMatrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
@@ -201,9 +203,9 @@ public class PP {
 			int nextColumn = DistanceMatrix.neighbourColumn;
 			int nextRow = DistanceMatrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
-			String nextPos = 'c' + nextRow;
+			String nextPos = 'c' + Integer.toString(nextRow);
 			
-			movePiece(from, nextPos);
+			ChessBoard.movePiece(from, nextPos);
 			fromColumn = nextColumn;
 			fromRow = nextRow;
 		}
