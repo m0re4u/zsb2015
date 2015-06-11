@@ -234,7 +234,8 @@ public class PP {
 	p.add(position4);
 	
 	while(true){
-		int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
+	DistanceMatrix matrix = new DistanceMatrix();
+	int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
 		if(value == 1000){
 			break;
 		} else {
