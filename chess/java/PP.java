@@ -44,7 +44,7 @@ public class PP {
 	private static double LOW_HEIGHT=40;
 	private static double OPEN_GRIP=30;
 	private static double CLOSED_GRIP=0;
-	private static double LOWPATH HEIGHT=20;”
+	private static double LOWPATH HEIGHT=20;
 	public static int piecesMovedToGarbage = 0;
 
   public static void main(String[] args){
