@@ -81,7 +81,13 @@ public class PP {
     computerTo = args[0].substring(2,4);
     
     /* plan a path for the move */
-    highPath(computerFrom, computerTo, b, p);
+	// use lowPath when possible, else use highPath
+    DistanceMatrix.distanceTransform(b, computerto);
+	if(!DistanceMatrix.notPossible(computerTo)){
+		lowPath(computerFrom, computerTo, b, p);
+	} else {
+		highPath(computerFrom, computerTo, b, p);
+	}
 
     /* move the computer piece */
     try {
@@ -193,7 +199,28 @@ public class PP {
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
 	
-	DistanceMatrix.distanceTransform(b, to);
+	// FIRST POSITION     
+	Point cart1 = studentBoardTrans.toCartesian(fromColumn, fromRow);
+	cart1.z = SAFE_HEIGHT;   
+	GripperPosition position1 = new GripperPosition(cart1, 0, OPEN_GRIP);
+	p.add(position1);
+	
+	// SECOND POSITION 
+	Point cart2 = studentBoardTrans.toCartesian(fromColumn, fromRow); 
+	cart2.z = LOW_HEIGHT; 
+	GripperPosition position2 = new GripperPosition(cart2, 0, OPEN_GRIP);
+	p.add(position2);
+	
+	// THIRD POSITION
+	double C_HEIGHT = 0.5 * pHeight; 
+	Point cart3 = studentBoardTrans.toCartesian(fromColumn, fromRow);
+	cart3.z = C_HEIGHT;
+	GripperPosition position3 = new GripperPosition(cart3, 0, OPEN_GRIP);
+	p.add(position3);
+	
+	// FOURTH POSITION
+	GripperPosition position4 = new GripperPosition(cart3, 0, CLOSED_GRIP);
+	p.add(position4);
 	
 	while(true){
 		int value = DistanceMatrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
@@ -205,11 +232,45 @@ public class PP {
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
-			ChessBoard.movePiece(from, nextPos);
+			try{
+				pHeight = b.getHeight(from);
+			} catch (Exception e) {
+				System.out.print(e);
+				System.out.println(" - Something went wrong");
+			}
+			// MOVE ALONG PATH ONE SQUARE AT THE TIME
+			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
+			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
+			GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+			p.add(position5);
+			
 			fromColumn = nextColumn;
 			fromRow = nextRow;
 		}
 	}
+	
+	// SIXTH POSITION
+	double LOW_HALF_P = LOWPATH_HEIGHT + (0.5 * pHeight);
+	cart5.z = LOW_HALF_P;
+	GripperPosition afterpos1 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	p.add(afterpos1);
+	
+	// SEVENTH POSITION
+	double HL_HP = (0.5* LOWPATH_HEIGHT) + (0.5 * pHeight);
+	cart5.z = HL_HP;
+	GripperPosition afterpos2 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	p.add(afterpos2);
+	
+	// EIGHTH POSITION
+	cart5.z = C_HEIGHT;
+	GripperPosition afterpos3 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	p.add(afterpos3);
+	
+	// NINTH POSITION
+	cart5.z = SAFE_HEIGHT;
+	GripperPosition safepos = new GripperPosition(cart5, 0, OPEN_GRIP);
+	p.add(safepos);
+	
   }
 
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g){
