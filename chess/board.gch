@@ -4,14 +4,14 @@ TimeControl 0 Operator Time 0
 White Clock 0 Moves 0
 Black Clock 0 Moves 0
 
-8 ........ 0 0 0 0 0 0 0 0
-7 ........ 0 0 0 0 0 0 0 0
-6 ........ 0 0 0 0 0 0 0 0
+8 R.BQKB.R 0 0 0 0 0 0 0 0
+7 PPPPPPPP 0 0 0 0 0 0 0 0
+6 ..N..N.. 0 0 0 0 0 0 0 0
 5 ........ 0 0 0 0 0 0 0 0
-4 ........ 0 0 0 0 0 0 0 0
-3 .k...... 0 0 0 0 0 0 0 0
-2 ........ 0 0 0 0 0 0 0 0
-1 .K..q... 0 0 0 0 0 0 0 0
+4 ...p.... 0 0 0 0 0 0 0 0
+3 ..n..n.. 0 0 0 0 0 0 0 0
+2 ppp.pppp 0 0 0 0 0 0 0 0
+1 r.bqkb.r 0 0 0 0 0 0 0 0
   abcdefgh
 
 move  score depth  nodes  time flags capture color
