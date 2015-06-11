@@ -82,8 +82,9 @@ public class PP {
     
     /* plan a path for the move */
 	// use lowPath when possible, else use highPath
-    DistanceMatrix.distanceTransform(b, computerTo);
-	if(!DistanceMatrix.notPossible(computerTo)){
+	DistanceMatrix matrix = new DistanceMatrix();
+    matrix.distanceTransform(b, computerTo);
+	if(!matrix.notPossible(computerTo)){
 		lowPath(computerFrom, computerTo, b, p);
 	} else {
 		highPath(computerFrom, computerTo, b, p);
@@ -233,12 +234,12 @@ public class PP {
 	p.add(position4);
 	
 	while(true){
-		int value = DistanceMatrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
+		int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
 		if(value == 1000){
 			break;
 		} else {
-			nextColumn = 	DistanceMatrix.neighbourCol;
-			nextRow = 		DistanceMatrix.neighbourRow;
+			nextColumn = 	matrix.neighbourCol;
+			nextRow = 		matrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
