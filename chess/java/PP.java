@@ -191,7 +191,7 @@ public class PP {
 	
   }
 */
-  private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> p){
+  private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g){
 	double pHeight = 200;
 
     // Use the boardLocation and toCartesian methods you wrote:
