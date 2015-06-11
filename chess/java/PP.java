@@ -82,7 +82,7 @@ public class PP {
     
     /* plan a path for the move */
 	// use lowPath when possible, else use highPath
-    DistanceMatrix.distanceTransform(b, computerto);
+    DistanceMatrix.distanceTransform(b, computerTo);
 	if(!DistanceMatrix.notPossible(computerTo)){
 		lowPath(computerFrom, computerTo, b, p);
 	} else {
@@ -199,6 +199,13 @@ public class PP {
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
 	
+	try{
+		pHeight = b.getHeight(from);
+	} catch (Exception e) {
+		System.out.print(e);
+		System.out.println(" - Something went wrong");
+	}
+	
 	// FIRST POSITION     
 	Point cart1 = studentBoardTrans.toCartesian(fromColumn, fromRow);
 	cart1.z = SAFE_HEIGHT;   
@@ -232,12 +239,6 @@ public class PP {
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
-			try{
-				pHeight = b.getHeight(from);
-			} catch (Exception e) {
-				System.out.print(e);
-				System.out.println(" - Something went wrong");
-			}
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
@@ -250,25 +251,26 @@ public class PP {
 	}
 	
 	// SIXTH POSITION
+	Point cart6 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 	double LOW_HALF_P = LOWPATH_HEIGHT + (0.5 * pHeight);
-	cart5.z = LOW_HALF_P;
-	GripperPosition afterpos1 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	cart6.z = LOW_HALF_P;
+	GripperPosition afterpos1 = new GripperPosition(cart6, 0, CLOSED_GRIP);
 	p.add(afterpos1);
 	
 	// SEVENTH POSITION
 	double HL_HP = (0.5* LOWPATH_HEIGHT) + (0.5 * pHeight);
-	cart5.z = HL_HP;
-	GripperPosition afterpos2 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	cart6.z = HL_HP;
+	GripperPosition afterpos2 = new GripperPosition(cart6, 0, CLOSED_GRIP);
 	p.add(afterpos2);
 	
 	// EIGHTH POSITION
-	cart5.z = C_HEIGHT;
-	GripperPosition afterpos3 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+	cart6.z = C_HEIGHT;
+	GripperPosition afterpos3 = new GripperPosition(cart6, 0, CLOSED_GRIP);
 	p.add(afterpos3);
 	
 	// NINTH POSITION
-	cart5.z = SAFE_HEIGHT;
-	GripperPosition safepos = new GripperPosition(cart5, 0, OPEN_GRIP);
+	cart6.z = SAFE_HEIGHT;
+	GripperPosition safepos = new GripperPosition(cart6, 0, OPEN_GRIP);
 	p.add(safepos);
 	
   }
