@@ -192,7 +192,7 @@ public class PP {
 	
   } 
   
-  private void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
+  private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
   	
 	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
@@ -237,8 +237,8 @@ public class PP {
 		if(value == 1000){
 			break;
 		} else {
-			nextColumn = DistanceMatrix.neighbourColumn;
-			nextRow = DistanceMatrix.neighbourRow;
+			nextColumn = 	DistanceMatrix.neighbourCol;
+			nextRow = 		DistanceMatrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
