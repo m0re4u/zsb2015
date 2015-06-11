@@ -132,8 +132,8 @@ class BoardTrans
   }
 }
 
-class StudentBoardTrans
-{
+class StudentBoardTrans {
+
   public ChessBoard board; // our board
   public String pos; // the position we're going to examine
   public BoardLocation boardLocation;

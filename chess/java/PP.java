@@ -37,7 +37,7 @@
 import java.io.*;
 import java.lang.*;
 import java.util.Vector;
-import java.util.ArrayList
+import java.util.ArrayList;
 
 public class PP {
   private static double SAFE_HEIGHT=200;
@@ -98,8 +98,7 @@ public class PP {
     GripperPosition.write(p);
   }
 
-  private static void highPath(String from, String to, 
-           ChessBoard b, Vector<GripperPosition> p) {
+  private static void highPath(String from, String to, ChessBoard b, Vector<GripperPosition> p) {
 
     System.out.println("**** In high path"); 
 
@@ -252,15 +251,13 @@ public class PP {
   }
   
   private static String intsToChessPos(int column, int row){
-	char column = Character.toChars(column + 61) -;
+	char column = Character.toChars(column + 61);
 	char row = Character.toChars(ch2 + 30);
 	String s = column.toString() + row.toString();
 	return s;
     }
-  }
 
-  private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g) {
-
+  private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> p){
 	double pHeight = 200;
 
     // Use the boardLocation and toCartesian methods you wrote:
