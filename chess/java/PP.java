@@ -184,7 +184,7 @@ public class PP {
     p.add(position10);
 	
   } 
-  private static void lowPath(String from, String to, Chessboard b, Vector<GripperPosition> p){
+  private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
   	/* 
   		We'll use breadth-first search as our algorithm. We look up the path to 
   		the 'to' position, and if one is found, we move there with low height. 
@@ -219,28 +219,28 @@ public class PP {
   	  //Checks for surrounding squares, add to list if its possible to move there
   	  //Right
   	  String newPos;
-  	  right = column + 1;
+  	  int right = column + 1;
   	  if(right >= 0 || right < 8){
 	  	  newPos = intsToChessPos(right, row);
 	  	  if(!hasPiece(newPos)) 
 	  	  		queue.add(newPos);
 	  }
   	  //Left
-  	  left = column - 1;
+  	  int left = column - 1;
   	  if(left >= 0 || left < 8){
 	  	  newPos = intsToChessPos(left, row);
 	  	  if(!hasPiece(newPos)) 
 	  	  		queue.add(newPos);
 	  }
   	  //Up
-  	  up = row + 1;
+  	  int up = row + 1;
   	  if(up >= 0 || up < 8){
 	  	  newPos = intsToChessPos(column, up);
 	  	  if(!hasPiece(newPos)) 
 	  	  		queue.add(newPos);
 	  }
   	  //Down
-	  down = row - 1;
+	  int down = row - 1;
   	  if(down >= 0 || down < 8){
 	  	  newPos = intsToChessPos(column, down);
 	  	  if(!hasPiece(newPos)) 
