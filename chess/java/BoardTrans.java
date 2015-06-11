@@ -150,8 +150,6 @@ class StudentBoardTrans {
     /* You can ignore the normal of the board, i.e. we assume the chess
      * board always lies flat on the table.
      */
-	System.out.println(row);
-	System.out.println(column);
 	double x = 0;
 	x = (board.coords.x - board.sur_x) - 
 		(((7 - column) * board.delta_x) + (board.delta_x / 2));

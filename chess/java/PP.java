@@ -184,13 +184,32 @@ public class PP {
     p.add(position10);
 	
   } 
-  /*
+  
   private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
   	
-	//We'll be implementing this
+	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
+    StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
+	int fromColumn = studentBoardTrans.boardLocation.column;
+    int fromRow = studentBoardTrans.boardLocation.row;
 	
+	
+	while(true){
+		int value = DistanceMatrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
+		if(value == 1000){
+			break;
+		} else {
+			int nextColumn = DistanceMatrix.neighbourColumn;
+			int nextRow = DistanceMatrix.neighbourRow;
+			char c = (char) (nextColumn + 96);
+			String nextPos = 'c' + nextRow;
+			
+			movePiece(from, nextPos);
+			fromColumn = nextColumn;
+			fromRow = nextRow;
+		}
+	}
   }
-*/
+
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g){
 	double pHeight = 200;
 
