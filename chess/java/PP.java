@@ -184,79 +184,13 @@ public class PP {
     p.add(position10);
 	
   } 
+  /*
   private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
-  	/* 
-  		We'll use breadth-first search as our algorithm. We look up the path to 
-  		the 'to' position, and if one is found, we move there with low height. 
-  		If no path is found, we just move with highPath.
-  	*/
-  	ArrayList<String> moveOrder = getMove(from, to);
   	
+	//We'll be implementing this
+	
   }
-  
-  private static ArrayList<String> getMove(String from, String to){
-  	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
-    StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);
-    int fromColumn = studentBoardTrans.boardLocation.column;
-    int fromRow = studentBoardTrans.boardLocation.row;
-    int toColumn = studentBoardTrans2.boardLocation.column;
-    int toRow = studentBoardTrans2.boardLocation.row;
-    
-    ArrayList<String> queue = checkSurroundingSquares(fromColumn, fromRow);
-    
-    if(queue.contains(to)){
-    	
-    } else {
-		for (String pos : queue){
-			getMove(pos, to);
-		}
-    }
-  }
-  
-  private static ArrayList<String> checkSurroundingSquares(int column, int row){
-      ArrayList<String> queue = new ArrayList<String>(); 
-  	  
-  	  //Checks for surrounding squares, add to list if its possible to move there
-  	  //Right
-  	  String newPos;
-  	  int right = column + 1;
-  	  if(right >= 0 || right < 8){
-	  	  newPos = intsToChessPos(right, row);
-	  	  if(!hasPiece(newPos)) 
-	  	  		queue.add(newPos);
-	  }
-  	  //Left
-  	  int left = column - 1;
-  	  if(left >= 0 || left < 8){
-	  	  newPos = intsToChessPos(left, row);
-	  	  if(!hasPiece(newPos)) 
-	  	  		queue.add(newPos);
-	  }
-  	  //Up
-  	  int up = row + 1;
-  	  if(up >= 0 || up < 8){
-	  	  newPos = intsToChessPos(column, up);
-	  	  if(!hasPiece(newPos)) 
-	  	  		queue.add(newPos);
-	  }
-  	  //Down
-	  int down = row - 1;
-  	  if(down >= 0 || down < 8){
-	  	  newPos = intsToChessPos(column, down);
-	  	  if(!hasPiece(newPos)) 
-	  	  		queue.add(newPos);
-	  }
-	  
-	  return queue;
-  }
-  
-  private static String intsToChessPos(int column, int row){
-	char column = Character.toChars(column + 61);
-	char row = Character.toChars(ch2 + 30);
-	String s = column.toString() + row.toString();
-	return s;
-    }
-
+*/
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> p){
 	double pHeight = 200;
 
