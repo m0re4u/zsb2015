@@ -198,12 +198,15 @@ public class PP {
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
+	int nextColumn, nextRow;
+	double pHeight = 200;
 	
 	try{
 		pHeight = b.getHeight(from);
 	} catch (Exception e) {
 		System.out.print(e);
 		System.out.println(" - Something went wrong");
+		System.exit(-1);
 	}
 	
 	// FIRST POSITION     
@@ -234,8 +237,8 @@ public class PP {
 		if(value == 1000){
 			break;
 		} else {
-			int nextColumn = DistanceMatrix.neighbourColumn;
-			int nextRow = DistanceMatrix.neighbourRow;
+			nextColumn = DistanceMatrix.neighbourColumn;
+			nextRow = DistanceMatrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
