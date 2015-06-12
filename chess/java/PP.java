@@ -83,13 +83,22 @@ public class PP {
     /* plan a path for the move */
 	// use lowPath when possible, else use highPath
 	DistanceMatrix matrix = new DistanceMatrix();
+	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(computerFrom);
+	
     matrix.distanceTransform(b, computerTo);
-	if(!matrix.notPossible(computerTo)){
-		System.out.println("Using low path");
-		lowPath(computerFrom, computerTo, b, p);
-	} else {
+	int computerFromColumn = studentBoardTrans.boardLocation.column;
+	int computerFromRow = studentBoardTrans.boardLocation.row;
+	int pathCheck = matrix.smallestPositiveNeighbourValue(computerFromColumn, computerFromRow);
+	if(pathCheck == 1000){
 		System.out.println("Using high path");
 		highPath(computerFrom, computerTo, b, p);
+	} else {
+		System.out.println("Using low path");
+		System.out.println("pathCheck = " + pathCheck);
+		System.out.println("Column = " + computerFromColumn);
+		System.out.println("Row = " + computerFromRow);
+		matrix.print();
+		lowPath(computerFrom, computerTo, b, p);
 	}
 
     /* move the computer piece */
@@ -238,24 +247,34 @@ public class PP {
 	p.add(position4);
 	
 	while(true){
-	DistanceMatrix matrix = new DistanceMatrix();
-	matrix.distanceTransform(b, to);
-	int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
-	
-		if(value == 1000){
-			break;	
-		} else {
+		DistanceMatrix matrix = new DistanceMatrix();
+		matrix.distanceTransform(b, to);
+		int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
+		if(value == 0){
 			nextColumn = matrix.neighbourCol;
 			nextRow = matrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
-			
+		
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
 			GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
 			p.add(position5);
 			
+			break;
+		} else {
+			nextColumn = matrix.neighbourCol;
+			nextRow = matrix.neighbourRow;
+			char c = (char) (nextColumn + 96);
+			String nextPos = 'c' + Integer.toString(nextRow);
+		
+			// MOVE ALONG PATH ONE SQUARE AT THE TIME
+			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
+			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
+			GripperPosition position5 = new GripperPosition(cart5, 0, CLOSED_GRIP);
+			p.add(position5);
+		
 			fromColumn = nextColumn;
 			fromRow = nextRow;
 		}

@@ -168,7 +168,7 @@ class StudentBoardTrans {
     return(result);
   }
 
-  class BoardLocation{
+public class BoardLocation{
     public int row;
     public int column;
     
