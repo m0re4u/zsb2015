@@ -85,8 +85,10 @@ public class PP {
 	DistanceMatrix matrix = new DistanceMatrix();
     matrix.distanceTransform(b, computerTo);
 	if(!matrix.notPossible(computerTo)){
+		System.out.println("Using low path");
 		lowPath(computerFrom, computerTo, b, p);
 	} else {
+		System.out.println("Using high path");
 		highPath(computerFrom, computerTo, b, p);
 	}
 
@@ -199,7 +201,9 @@ public class PP {
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
-	int nextColumn, nextRow;
+	// only an init, these will be overwritten:
+	int nextColumn = 1;
+	int nextRow = 1;
 	double pHeight = 200;
 	
 	try{
@@ -235,12 +239,14 @@ public class PP {
 	
 	while(true){
 	DistanceMatrix matrix = new DistanceMatrix();
+	matrix.distanceTransform(b, to);
 	int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
+	
 		if(value == 1000){
-			break;
+			break;	
 		} else {
-			nextColumn = 	matrix.neighbourCol;
-			nextRow = 		matrix.neighbourRow;
+			nextColumn = matrix.neighbourCol;
+			nextRow = matrix.neighbourRow;
 			char c = (char) (nextColumn + 96);
 			String nextPos = 'c' + Integer.toString(nextRow);
 			
