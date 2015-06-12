@@ -88,16 +88,13 @@ public class PP {
     matrix.distanceTransform(b, computerTo);
 	int computerFromColumn = studentBoardTrans.boardLocation.column;
 	int computerFromRow = studentBoardTrans.boardLocation.row;
-	int pathCheck = matrix.smallestPositiveNeighbourValue(computerFromColumn, computerFromRow);
-	if(pathCheck == 1000){
+	int pathCheck = matrix.smallestPositiveNeighbourValue(computerFromRow, computerFromColumn);
+
+	if(pathCheck == 1000 || pathCheck == -3 || pathCheck == -1){
 		System.out.println("Using high path");
 		highPath(computerFrom, computerTo, b, p);
 	} else {
 		System.out.println("Using low path");
-		System.out.println("pathCheck = " + pathCheck);
-		System.out.println("Column = " + computerFromColumn);
-		System.out.println("Row = " + computerFromRow);
-		matrix.print();
 		lowPath(computerFrom, computerTo, b, p);
 	}
 

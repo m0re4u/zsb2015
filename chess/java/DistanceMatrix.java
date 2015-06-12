@@ -180,8 +180,8 @@ public class DistanceMatrix {
 	BoardLocation t = new BoardLocation(target);
 
 	if(distanceMatrix[t.row][t.column] == UNREACHABLE)
-	    return(true);
-	else
+	    return(true);	
+	else 
 	    return(false);
     }
 
