@@ -1,3 +1,10 @@
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *		PP.java
+  *		Jonathan Gerbscheid & Michiel van der Meer
+  *		10787852 			& 10749810
+  * 	Group E
+  * 	15/06/2015
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*
  * PP.java
  * Assignment for the Path planning part of the ZSB lab course.
@@ -80,11 +87,20 @@ public class PP {
     computerFrom = args[0].substring(0,2);
     computerTo = args[0].substring(2,4);
     
+    /* If there is a piece at target location move that piece to garbage
+     * this is done BEFORE high/low path is called to make sure that the pieces
+     * don't collide
+     */
+     
+    if(b.hasPiece(computerTo)){
+    	System.out.println("Removing Garbage...");
+    	moveToGarbage(computerTo, b, p);
+    }
+
     /* plan a path for the move */
 	// use lowPath when possible, else use highPath
 	DistanceMatrix matrix = new DistanceMatrix();
 	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(computerFrom);
-	
     matrix.distanceTransform(b, computerTo);
 	int computerFromColumn = studentBoardTrans.boardLocation.column;
 	int computerFromRow = studentBoardTrans.boardLocation.row;
@@ -110,6 +126,7 @@ public class PP {
     /* print the board state*/
     b.print();
     
+    
     /* after done write the gripper positions */
     GripperPosition.write(p);
   }
@@ -124,13 +141,16 @@ public class PP {
     StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);
     
+    // Error handling 
     try{
-    pHeight = b.getHeight(from);
+    	pHeight = b.getHeight(from);
     } catch (Exception e) {
         System.out.println(e);
         System.out.println("something went wrong");
     }
-
+	/*	Below are the 10 positions needed for moving a piece according to 
+	 *	high path. These are added to the GripperPosition Vector
+	 */
     // FIRST POSITION     
 	int fromColumn = studentBoardTrans.boardLocation.column;
     int fromRow = studentBoardTrans.boardLocation.row;
@@ -203,6 +223,10 @@ public class PP {
   
   private static void lowPath(String from, String to, ChessBoard b, Vector<GripperPosition> p){
   	
+  	/*	lowPath uses the same Position bases system, but with a while loop 
+  	 *	for navigating in between pieces. There is no need for a check on 
+  	 *	possible paths, as that is done beforehand by DistanceMatrix
+  	 */
 	StudentBoardTrans studentBoardTrans = new StudentBoardTrans(from);
     StudentBoardTrans studentBoardTrans2 = new StudentBoardTrans(to);   
 	int fromColumn = studentBoardTrans.boardLocation.column;
@@ -212,12 +236,12 @@ public class PP {
 	int nextRow = 1;
 	double pHeight = 200;
 	
+	// Error handling
 	try{
 		pHeight = b.getHeight(from);
 	} catch (Exception e) {
 		System.out.print(e);
 		System.out.println(" - Something went wrong");
-		System.exit(-1);
 	}
 	
 	// FIRST POSITION     
@@ -243,16 +267,24 @@ public class PP {
 	GripperPosition position4 = new GripperPosition(cart3, 0, CLOSED_GRIP);
 	p.add(position4);
 	
-	while(true){
-		DistanceMatrix matrix = new DistanceMatrix();
-		matrix.distanceTransform(b, to);
+	/* a while to make sure you move along the path indicated in DistanceMatrix,
+	 * until you reach your target destination
+	 */
+	DistanceMatrix matrix = new DistanceMatrix();
+	matrix.distanceTransform(b, to);
+	matrix.print();
+	while(true){	
 		int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
 		if(value == 0){
-			nextColumn = matrix.neighbourCol;
-			nextRow = matrix.neighbourRow;
-			char c = (char) (nextColumn + 96);
-			String nextPos = 'c' + Integer.toString(nextRow);
+			/* Perform the last move when you have a neighbouring square with
+			 * value 0. The values of Row and Col are switched for some unknown 
+			 * reason
+			 */
+ 			nextColumn = matrix.neighbourRow;
+			nextRow = matrix.neighbourCol;
 		
+			System.out.println("IF: OldColumn = " + fromColumn + " - OldRow = " + fromRow);
+			System.out.println("IF: NextColumn = " + nextColumn + " - NextRow = " + nextRow);
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
@@ -261,11 +293,16 @@ public class PP {
 			
 			break;
 		} else {
-			nextColumn = matrix.neighbourCol;
-			nextRow = matrix.neighbourRow;
-			char c = (char) (nextColumn + 96);
-			String nextPos = 'c' + Integer.toString(nextRow);
+			// Keep moving until your a neighbouring square has a distance value
+			// of 0
+			nextRow = matrix.neighbourCol;
+			nextColumn = matrix.neighbourRow;
+			char c = (char) (nextColumn + 97);
+			String nextPos = c + Integer.toString(nextRow);
 		
+			System.out.println("ELSE: OldColumn = " + fromColumn + " - OldRow = " + fromRow);
+			System.out.println("ELSE: NextColumn = " + nextColumn + " - NextRow = " + nextRow);
+			System.out.println("-------------");
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
@@ -305,6 +342,10 @@ public class PP {
   private static void moveToGarbage(String to, ChessBoard b, Vector<GripperPosition> g){
 	double pHeight = 200;
 
+	/*	moveToGarbage
+	 *	Moves a piece off the board and keeps track of how many pieces are on
+	 * 	the pile. If that number exceeds 8, a new row is created
+	 */
     // Use the boardLocation and toCartesian methods you wrote:
     StudentBoardTrans studentBoardTrans = new StudentBoardTrans(to);
     
@@ -320,7 +361,8 @@ public class PP {
     int checkedRow = studentBoardTrans.boardLocation.row;
     Point cart1 = studentBoardTrans.toCartesian(checkedColumn, checkedRow);
     cart1.z = SAFE_HEIGHT;   
-	System.out.println(cart1);
+    String temp = cart1.toString();
+    System.out.print("From: " + temp);
 	
 	GripperPosition position1 = new GripperPosition(cart1, 0, OPEN_GRIP);
 	g.add(position1);
@@ -351,6 +393,8 @@ public class PP {
 	// STARTING TO MOVE OFF THE BOARD ** DANGER DANGER!
 	// SIXTH POSITION
 	Point cart6 = getGarbagePileCoords(b);
+	temp = cart6.toString();
+    System.out.print("To: " + temp);
 	cart6.z = SAFE_HEIGHT;
 	GripperPosition position6 = new GripperPosition(cart6, 0, CLOSED_GRIP);
 	g.add(position5);
@@ -382,6 +426,8 @@ public class PP {
     System.out.println("**** In movoToGarbage"); 
 
   }
+  // method to find out where to where the pile should be made, also keeps track
+  // of garbage count
   private static Point getGarbagePileCoords(ChessBoard b){
 	double hor = b.coords.x;
 	double dist = b.sur_x;
@@ -398,8 +444,4 @@ public class PP {
 	
 	return garbagePoint;
 	}
-	
-  private static void lowPath(){
-  
-  }
 }

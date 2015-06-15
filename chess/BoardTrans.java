@@ -1,3 +1,10 @@
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *		BoardTrans.java
+  *		Jonathan Gerbscheid & Michiel van der Meer
+  *		10787852 			& 10749810
+  * 	Group E
+  * 	15/06/2015
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*
  * First assignment for the Path Planning part of the Robotics practical.
  *
@@ -22,7 +29,8 @@
  * This Java introduction was written for the 2001/2002 course.
  * Matthijs Spaan <mtjspaan@science.uva.nl>
  * $Id: Week1.java,v 1.9 2008/06/10 10:21:36 obooij Exp $
- */
+ */ 
+ 
 
 import java.io.*;
 import java.lang.*;
@@ -147,9 +155,36 @@ class StudentBoardTrans {
 
   public Point toCartesian(int column, int row)
   {
-    /* You can ignore the normal of the board, i.e. we assume the chess
-     * board always lies flat on the table.
+    /* Below are the calculation for the cartesian coordinates.
+     * It uses basic matrix multiplication
      */
+	double x = 0;
+	x = (board.coords.x - board.sur_x) - 
+		(((7 - column) * board.delta_x) + (board.delta_x / 2));
+	double y = 0;
+	y = (board.coords.y + board.sur_y) + 
+		(((7 - row) * board.delta_y) + (board.delta_y/2));
+	double z = board.board_thickness;
+
+	double radangle = Math.toRadians(board.theta);
+	double cosAlpha = Math.cos(radangle);
+	double sinAlpha = Math.sin(radangle);
+	double newx = (cosAlpha * (x - board.coords.x)) + (sinAlpha * (y - board.coords.y)) + board.coords.x;
+	double newy = (-sinAlpha * (x - board.coords.x)) + (cosAlpha * (y - board.coords.y)) + board.coords.y;
+
+    Point result = new Point (newx,newy,z);
+    return(result);
+  }
+  public Point toCartesian(String pos)
+  {
+    /* Below are the calculation for the cartesian coordinates.
+     * It uses basic matrix multiplication
+     */
+	char ch1 = pos.charAt(0);
+	char ch2 = pos.charAt(1);
+	int column = Character.getNumericValue(ch1) - 10;
+	int row = Character.getNumericValue(ch2) - 1;
+	
 	double x = 0;
 	x = (board.coords.x - board.sur_x) - 
 		(((7 - column) * board.delta_x) + (board.delta_x / 2));
@@ -172,13 +207,12 @@ public class BoardLocation{
     public int row;
     public int column;
     
-    
     public BoardLocation()
     {
     	char ch1 = pos.charAt(0);
     	char ch2 = pos.charAt(1);
-		row = Character.getNumericValue(ch2) - 1;
 		column = Character.getNumericValue(ch1) - 10;
+		row = Character.getNumericValue(ch2) - 1;
     }
   }
 }
