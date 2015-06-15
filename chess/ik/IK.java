@@ -54,10 +54,16 @@ public class IK {
    */
   private static void handJointCalculation(GripperPosition pos,
                                              JointValues j) {
-    j.roll = 23; // ????
-    j.pitch = 23; // ????
-    j.yaw = 23; // ????
-    j.grip = 23; // ????
+    double grip = pos.grip;
+	Point gripcoord = pos.coords;
+	double x = gripcoord.x;
+	double y = gripcoord.y;
+	double z = gripcoord.z;
+	
+	j.roll = 0; 
+	j.pitch = -90;
+    j.yaw = -j.shoulder * (0.5 * -j.elbow);
+    j.grip = grip; 
   }
 
   /* Calculate the wrist coordinates from the hand coordinates.
@@ -66,7 +72,11 @@ public class IK {
    */
   private static Point wristCoordinatesCalculation(GripperPosition pos) {
 
-    Point c = new Point(23,23,23); // ????
+    Point c = new Point();
+	c.x = pos.coords.x;
+	c.y = pos.coords.y;
+	c.z = pos.coords.z + 20;
+	
     return(c);
   }
 
@@ -75,9 +85,29 @@ public class IK {
    */
   private static void armJointCalculation(Point wristCoords,
               JointValues j) {
-    j.zed = 23; // ????
-    j.shoulder = 23; // ????
-    j.elbow = 23; // ????
+    
+	double x = wristCoords.coords.x;
+	double y = wristCoords.coords.y;
+	double z = wristCoords.coords.z;
+	RobotJoints.Joint shoulderR = RobotJoints.get(shoulder);
+	double l1 = shoulderR.a;
+	RobotJoints.Joint elbowR = RobotJoints.get(elbow);
+	double l2 = shoulderR.a;
+	
+	double cosT2 = (x^2 + y^2 - l1^2 - l2^2) / 2 * l1 * l2;
+	double sinT2 = sqrt(1-cosT2^2);	
+	double minSinT2 = -sqrt(1-cosT2^2);
+	double Theta2 = atan2(sinT2, cosT2);
+	double minusTheta2 = atan2(minSinT2, cosT2);
+	
+	double Theta1 = atan2(y,x) - atan2(l2sinT2, l1 + l2 * cosT2);
+	
+	System.out.println(Theta2);
+	System.out.println(Theta1);
+	
+	j.zed = 90;
+    j.shoulder = Theta1; // ????
+    j.elbow = Theta2; // ????
   }
 
   /* Calculate the appropriate values for all joints for position pos.
