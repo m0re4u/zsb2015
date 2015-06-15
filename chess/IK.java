@@ -62,7 +62,10 @@ public class IK {
 	
 	j.roll = 0; 
 	j.pitch = -90;
-    j.yaw = -j.shoulder * (0.5 * -j.elbow);
+	
+	// moved yaw to armJoinCalculation, after j.elbow and j.shoulder are 
+	// assigned a value.
+    j.yaw = 0;
     j.grip = grip; 
   }
 
@@ -75,7 +78,8 @@ public class IK {
     Point c = new Point();
 	c.x = pos.coords.x;
 	c.y = pos.coords.y;
-	c.z = pos.coords.z + 20;
+	RobotJoints.Joint wristR = robotJoints.get("roll");
+	c.z = pos.coords.z + wristR.d; // correct wrist height?
 	
     return(c);
   }
@@ -86,28 +90,40 @@ public class IK {
   private static void armJointCalculation(Point wristCoords,
               JointValues j) {
     
-	double x = wristCoords.coords.x;
-	double y = wristCoords.coords.y;
-	double z = wristCoords.coords.z;
-	RobotJoints.Joint shoulderR = RobotJoints.get(shoulder);
+	double x = wristCoords.x;
+	double y = wristCoords.y;
+	double z = wristCoords.z;
+	RobotJoints.Joint shoulderR = robotJoints.get("shoulder");
 	double l1 = shoulderR.a;
-	RobotJoints.Joint elbowR = RobotJoints.get(elbow);
-	double l2 = shoulderR.a;
+	RobotJoints.Joint elbowR = robotJoints.get("elbow");
+	double l2 = elbowR.a;
+
+	double x2 = Math.pow(x,2);
+	double y2 = Math.pow(y,2);
+	double l12 = Math.pow(l1,2);
+	double l22 = Math.pow(l2,2);
+	double x2y2 = x2 + y2;
+	double l12l22 = l12 + l22;
+	double div = 2 * l1 * l2;
+	double cosT2 = (x2y2 - l12l22) / div ;
+	double sinT2 = Math.sqrt(1 - Math.pow(cosT2,2));	
+	double minSinT2 = -Math.sqrt(1 - Math.pow(cosT2,2));
+	double Theta2R = Math.atan2(sinT2, cosT2);
+	double minTheta2R = Math.atan2(minSinT2, cosT2);
 	
-	double cosT2 = (x^2 + y^2 - l1^2 - l2^2) / 2 * l1 * l2;
-	double sinT2 = sqrt(1-cosT2^2);	
-	double minSinT2 = -sqrt(1-cosT2^2);
-	double Theta2 = atan2(sinT2, cosT2);
-	double minusTheta2 = atan2(minSinT2, cosT2);
+	double Theta1R = Math.atan2(y,x) - Math.atan2(l2 * sinT2, l1 + l2 * cosT2);
+	double minTheta1R = Math.atan2(y,x) - Math.atan2(l2 * minSinT2, l1 + l2 * cosT2);
+	double Theta2 = Math.toDegrees(Theta2R);
+	double minTheta2 = Math.toDegrees(minTheta2R);
+	double Theta1 = Math.toDegrees(Theta1R);
+	double minTheta1 = Math.toDegrees(minTheta1R);
 	
-	double Theta1 = atan2(y,x) - atan2(l2sinT2, l1 + l2 * cosT2);
-	
-	System.out.println(Theta2);
-	System.out.println(Theta1);
-	
-	j.zed = 90;
-    j.shoulder = Theta1; // ????
-    j.elbow = Theta2; // ????
+	j.zed = 1000;
+    j.shoulder = 90 - Theta1; 
+    j.elbow = -Theta2;
+    // moved yaw from handCalculation
+    j.yaw = -j.shoulder + (0.5 * -j.elbow);
+    System.out.println("shoulder = " + j.shoulder);
   }
 
   /* Calculate the appropriate values for all joints for position pos.
