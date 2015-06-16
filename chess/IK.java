@@ -97,6 +97,8 @@ public class IK {
 	double l1 = shoulderR.a;
 	RobotJoints.Joint elbowR = robotJoints.get("elbow");
 	double l2 = elbowR.a;
+	double d1 = shoulderR.d;
+	double d2 = elbowR.d;
 
 	double x2 = Math.pow(x,2);
 	double y2 = Math.pow(y,2);
@@ -118,12 +120,11 @@ public class IK {
 	double Theta1 = Math.toDegrees(Theta1R);
 	double minTheta1 = Math.toDegrees(minTheta1R);
 	
-	j.zed = 1000;
-    j.shoulder = 90 - Theta1; 
-    j.elbow = -Theta2;
-    // moved yaw from handCalculation
-    j.yaw = -j.shoulder + (0.5 * -j.elbow);
-    System.out.println("shoulder = " + j.shoulder);
+	j.zed = z + d1 + d2; //z for gripper position + shoulder.d + elbow.d
+	j.shoulder = 90 - Theta1; 
+	j.elbow = -Theta2;
+	// moved yaw from handCalculation
+	j.yaw = -j.shoulder + (0.5 * -j.elbow);
   }
 
   /* Calculate the appropriate values for all joints for position pos.
@@ -169,8 +170,7 @@ public class IK {
     inverseKinematics(p, j);
     
     for (int i =0; i < j.size(); i++)
-              System.out.println((JointValues) j.get(i));
-
-    JointValues.write(j);
+        System.out.println((JointValues) j.get(i));
+    	JointValues.write(j);
   }
 }
