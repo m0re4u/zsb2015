@@ -106,8 +106,10 @@ public class PP {
 	int pathCheck = matrix.smallestPositiveNeighbourValue(computerFromRow, computerFromColumn);
 
 	if(pathCheck == 1000 || pathCheck == -3 || pathCheck == -1){
+		System.out.println("****Using highpath");		
 		highPath(computerFrom, computerTo, b, p);
 	} else {
+		System.out.println("****Using lowpath");
 		lowPath(computerFrom, computerTo, b, p);
 	}
 
@@ -264,18 +266,19 @@ public class PP {
 	/* a while to make sure you move along the path indicated in DistanceMatrix,
 	 * until you reach your target destination
 	 */
-	DistanceMatrix matrix = new DistanceMatrix();
-	matrix.distanceTransform(b, to);
-	while(true){	
+	
+	while(true){
+		DistanceMatrix matrix = new DistanceMatrix();
+		matrix.distanceTransform(b, to);	
+		matrix.print();
 		int value = matrix.smallestPositiveNeighbourValue(fromColumn, fromRow);
 		if(value == 0){
 			/* Perform the last move when you have a neighbouring square with
 			 * value 0. The values of Row and Col are switched for some unknown 
 			 * reason
 			 */
- 			nextColumn = matrix.neighbourRow;
-			nextRow = matrix.neighbourCol;
-		
+ 			nextColumn = matrix.neighbourCol;
+			nextRow = matrix.neighbourRow;
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);
@@ -288,9 +291,6 @@ public class PP {
 			// of 0
 			nextRow = matrix.neighbourCol;
 			nextColumn = matrix.neighbourRow;
-			char c = (char) (nextColumn + 97);
-			String nextPos = c + Integer.toString(nextRow);
-		
 			// MOVE ALONG PATH ONE SQUARE AT THE TIME
 			Point cart5 = studentBoardTrans.toCartesian(nextColumn, nextRow);
 			cart5.z = LOWPATH_HEIGHT + (0.5 * pHeight);

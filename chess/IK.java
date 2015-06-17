@@ -54,8 +54,10 @@ public class IK {
    */
   private static void handJointCalculation(GripperPosition pos,
                                              JointValues j) {
-    double grip = pos.grip;
+   	double grip = pos.grip;
 	Point gripcoord = pos.coords;
+	String s = pos.toString();
+	System.out.println("pos in handjointcalculation gives " + s);
 	double x = gripcoord.x;
 	double y = gripcoord.y;
 	double z = gripcoord.z;
@@ -121,8 +123,16 @@ public class IK {
 	double minTheta1 = Math.toDegrees(minTheta1R);
 	
 	j.zed = z + d1 + d2; //z for gripper position + shoulder.d + elbow.d
-	j.shoulder = 90 - Theta1; 
-	j.elbow = -Theta2;
+	if (wristCoords.x < 0){
+        j.shoulder = 90 - minTheta1;
+		j.elbow = -minTheta2;
+	}
+    else{
+		j.shoulder = 90 - Theta1;
+		j.elbow = -Theta2;
+    }
+	 
+	
 	// moved yaw from handCalculation
 	j.yaw = -j.shoulder + (0.5 * -j.elbow);
   }
@@ -151,7 +161,7 @@ public class IK {
       // if left on the board then assume left-hand configuration
       // if right on the board then assume right-hand configuration
       if (pos.coords.x < 0)
-        RobotJoints.correctCartesian(pos, 0);
+        RobotJoints.correctCartesian(pos, 0);p
       else 
         RobotJoints.correctCartesian(pos, 1);
       j.addElement(jointCalculation(pos));
@@ -166,6 +176,9 @@ public class IK {
 
     // read the gripper positions as produced by PP.java
     GripperPosition.read(p);
+
+    String ayay = p.toString();
+    System.out.println(ayay);
 
     inverseKinematics(p, j);
     
