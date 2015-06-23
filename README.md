@@ -2,15 +2,16 @@ Zoeken, Sturen en Bewegen
 =========================
 Repo voor Zoeken Sturen &amp; Bewegen 
 
-Finished assignment:
+Finished assignments:
 
 1. Tic-tac-toe Prolog
-
+2. endgamesolver
+3. path planning
+4. Inverse kinematics
 ---
 
 Current assignment:
 
-1. Chess! 
-
+1. Drone vs Wor - see dronevsworm.wordpress.com
 
 - Michiel
