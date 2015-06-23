@@ -12,6 +12,6 @@ Finished assignments:
 
 Current assignment:
 
-1. Drone vs Wor - see dronevsworm.wordpress.com
+1. [Drone vs Worm](dronevsworm.wordpress.com)
 
 - Michiel
