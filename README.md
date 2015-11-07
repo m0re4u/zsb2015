@@ -8,10 +8,10 @@ Finished assignments:
 2. endgamesolver
 3. path planning
 4. Inverse kinematics
+5.[Drone vs Worm](http://www.dronevsworm.wordpress.com)
+
 ---
 
 Current assignment:
-
-1. [Drone vs Worm](http://www.dronevsworm.wordpress.com)
-
+We're done! This was our final project of the first year.
 - Michiel
